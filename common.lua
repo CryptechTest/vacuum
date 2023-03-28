@@ -1,6 +1,6 @@
 
 
-vacuum.air_bottle_image = "vessels_steel_bottle.png^[colorize:#0000FFAA"
+vacuum.air_bottle_image = "vessels_steel_bottle.png^[colorize:#0028FF90^bottle_top.png"
 
 -- space pos checker
 vacuum.is_pos_in_space = function(pos)
