@@ -14,34 +14,34 @@ local function repair_recipe(partname)
 	})
 end
 
-repair_recipe("spacesuit:helmet")
-repair_recipe("spacesuit:chestplate")
-repair_recipe("spacesuit:pants")
-repair_recipe("spacesuit:boots")
+repair_recipe("spacesuit:helmet_base")
+repair_recipe("spacesuit:chestplate_base")
+repair_recipe("spacesuit:pants_base")
+repair_recipe("spacesuit:boots_base")
 
 if minetest.get_modpath("unified_inventory") then
 	unified_inventory.register_craft({
 		type = "filling",
-		output = "spacesuit:helmet 1 1",
-		items = {"spacesuit:helmet 1 60000"},
+		output = "spacesuit:helmet_base 1 1",
+		items = {"spacesuit:helmet_base 1 60000"},
 		width = 0,
 	})
 	unified_inventory.register_craft({
 		type = "filling",
-		output = "spacesuit:chestplate 1 1",
-		items = {"spacesuit:chestplate 1 60000"},
+		output = "spacesuit:chestplate_base 1 1",
+		items = {"spacesuit:chestplate_base 1 60000"},
 		width = 0,
 	})
 	unified_inventory.register_craft({
 		type = "filling",
-		output = "spacesuit:pants 1 1",
-		items = {"spacesuit:pants 1 60000"},
+		output = "spacesuit:pants_base 1 1",
+		items = {"spacesuit:pants_base 1 60000"},
 		width = 0,
 	})
 	unified_inventory.register_craft({
 		type = "filling",
-		output = "spacesuit:boots 1 1",
-		items = {"spacesuit:boots 1 60000"},
+		output = "spacesuit:boots_base 1 1",
+		items = {"spacesuit:boots_base 1 60000"},
 		width = 0,
 	})
 end
