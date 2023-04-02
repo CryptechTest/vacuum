@@ -37,12 +37,13 @@ minetest.register_abm({
 	min_y = vacuum.space_height,
 	action = vacuum.throttle(100, function(pos)
 
-		if not vacuum.is_pos_in_space(pos) or vacuum.near_powered_airpump(pos) then
+		if not vacuum.is_pos_in_space(pos) or vacuum.near_powered_airpump(pos, 3) then
 			return
 		end
 
 		local node = minetest.get_node(pos)
-		minetest.set_node(pos, {name = "vacuum:vacuum"})
+		--minetest.set_node(pos, {name = "vacuum:vacuum"})
+		minetest.set_node(pos, {name = "vacuum:atmos_thin"})
 
 		for _, drop in pairs(get_node_drops(node)) do
 			minetest.add_item(pos, ItemStack(drop))

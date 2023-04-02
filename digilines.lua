@@ -12,7 +12,7 @@ vacuum.airpump_digiline_effector = function(pos, _, channel, msg)
     return
   end
 
-  if msg.command == "flush" and vacuum.can_flush_airpump(pos) then
+  if msg.command == "flush" and vacuum.can_flush_airpump(pos) and vacuum.airpump_powered(meta) then
     vacuum.flush_airpump(pos)
   end
 

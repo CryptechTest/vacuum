@@ -10,8 +10,8 @@ end
 
 -- air leaking nodes
 local leaky_nodes = {
-	"group:door",
-	"group:soil",
+	--"group:door",
+	"group:soil", "group:sand",
 	"group:pipe", "group:tube"
 }
 
@@ -30,14 +30,14 @@ end
 minetest.register_abm({
 	label = "space vacuum depressurize",
 	nodenames = leaky_nodes,
-	neighbors = {"vacuum:vacuum"},
-	interval = 2,
-	chance = 2,
+	neighbors = {"vacuum:vacuum", "vacuum:atmos_thin"},
+	interval = 3,
+	chance = 3,
 	min_y = vacuum.space_height,
 	action = vacuum.throttle(250, function(pos)
 		if metric_space_vacuum_leak_abm ~= nil then metric_space_vacuum_leak_abm.inc() end
 
-		if not vacuum.is_pos_in_space(pos) or vacuum.near_powered_airpump(pos) then
+		if not vacuum.is_pos_in_space(pos) then --or vacuum.near_powered_airpump(pos) then
 			-- on earth: TODO: replace vacuum with air
 			return
 		else
@@ -48,13 +48,13 @@ minetest.register_abm({
 				return
 			end
 
-			if node.name == "vacuum:airpump" then
+			if node.name == "vacuum:airpump" or node.name == "vacuum:airpump_wait" or node.name == "vacuum:airpump_active" then
 				-- pump is airtight
 				return
 			end
 
 			-- in space: replace air with vacuum
-			local surrounding_node = minetest.find_node_near(pos, 1, {"air"})
+			local surrounding_node = minetest.find_node_near(pos, 1, {"vacuum:atmos_thick"})
 
 			if surrounding_node ~= nil then
 				if vacuum.debug then
@@ -62,8 +62,67 @@ minetest.register_abm({
 					minetest.set_node(surrounding_node, {name = "default:cobble"})
 				else
 					-- normal case
+					--minetest.set_node(surrounding_node, {name = "vacuum:atmos_thin"})
 					minetest.set_node(surrounding_node, {name = "vacuum:vacuum"})
 				end
+			end
+
+			local surrounding_atmos = minetest.find_node_near(pos, 1, {"vacuum:atmos_thin"})
+
+			if surrounding_atmos ~= nil then
+				if vacuum.debug then
+					-- debug mode, set
+					minetest.set_node(surrounding_atmos, {name = "default:cobble"})
+				else
+					-- normal case
+					--minetest.set_node(surrounding_node, {name = "vacuum:atmos_thin"})
+					minetest.set_node(surrounding_atmos, {name = "vacuum:vacuum"})
+				end
+			end
+		end
+	end)
+})
+
+-- depressurize through door nodes
+minetest.register_abm({
+	label = "space vacuum depressurize",
+	nodenames = "group:door",
+	neighbors = {"vacuum:vacuum", "vacuum:atmos_thin"},
+	interval = 1,
+	chance = 2,
+	min_y = vacuum.space_height,
+	action = vacuum.throttle(250, function(pos)
+		if metric_space_vacuum_leak_abm ~= nil then metric_space_vacuum_leak_abm.inc() end
+
+		if not vacuum.is_pos_in_space(pos) then --or vacuum.near_powered_airpump(pos) then
+			-- on earth: TODO: replace vacuum with air
+			return
+		else
+			local node = minetest.get_node(pos)
+
+			local door = minetest.get_item_group(node.name, "door")
+
+			-- in space: replace air with atmos_thin
+			local surrounding_vac = minetest.find_node_near(pos, 1, {"vacuum:vacuum"})
+
+			if surrounding_vac ~= nil then
+				if vacuum.debug then
+					-- debug mode, set
+					minetest.set_node(surrounding_vac, {name = "default:cobble"})
+				else
+					-- normal case
+					--minetest.set_node(surrounding_node, {name = "vacuum:atmos_thin"})
+					minetest.set_node(surrounding_vac, {name = "vacuum:atmos_thin"})
+				end
+			end
+			
+			local surrounding_atmos = minetest.find_node_near(pos, 1, {"vacuum:atmos_thick"})
+			
+			-- if door is open
+			if surrounding_atmos ~= nil and door == 2 then
+				minetest.set_node(surrounding_atmos, {name = "vacuum:atmos_thin"})
+			elseif surrounding_vac ~= nil and door == 2 then
+				minetest.set_node(surrounding_atmos, {name = "vacuum:atmos_thin"})
 			end
 		end
 	end)
