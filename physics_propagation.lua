@@ -151,6 +151,12 @@ minetest.register_abm({
                     })
                 end
             end
+            local node = minetest.get_node(pos)
+            if node.name == "air" or node.name == "technic:dummy_light_source" then
+                minetest.set_node(pos, {
+                    name = "vacuum:atmos_thick"
+                })
+            end
         end
     end)
 })
