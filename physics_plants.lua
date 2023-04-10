@@ -44,7 +44,7 @@ minetest.register_abm({
     label = "space vacuum plants",
     nodenames = {"group:leaves"},
     neighbors = {"vacuum:vacuum"},
-    interval = 2,
+    interval = 3,
     chance = 1,
     action = vacuum.throttle(100, function(pos)
         minetest.set_node(pos, {

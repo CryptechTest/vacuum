@@ -42,7 +42,7 @@ minetest.register_abm({
     nodenames = {"vacuum:vacuum"},
     neighbors = {"vacuum:atmos_thin"},
     interval = 1,
-    chance = 3, -- higher chance of thin appears
+    chance = 2, -- higher chance of thin appears
     min_y = vacuum.space_height,
     action = vacuum.throttle(1250, function(pos)
         -- update metrics 
