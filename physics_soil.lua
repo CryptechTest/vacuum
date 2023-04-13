@@ -6,7 +6,7 @@ minetest.register_abm({
                  "default:dirt_with_coniferous_litter", "default:dry_dirt", "default:dry_dirt_with_dry_grass",
                  "woodsoils:dirt_with_leaves_1", "woodsoils:dirt_with_leaves_2"},
     neighbors = {"vacuum:vacuum"},
-    interval = 1,
+    interval = 2,
     chance = 1,
     action = vacuum.throttle(100, function(pos)
         minetest.set_node(pos, {

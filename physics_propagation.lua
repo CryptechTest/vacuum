@@ -132,7 +132,7 @@ minetest.register_abm({
     interval = 1,
     chance = 2,
     min_y = vacuum.space_height,
-    action = vacuum.throttle(600, function(pos)
+    action = vacuum.throttle(1000, function(pos)
         -- update metrics
         if metric_space_vacuum_abm ~= nil then
             metric_space_vacuum_abm.inc()
@@ -222,30 +222,3 @@ minetest.register_abm({
     end)
 })
 
--- ====================================================================================
--- ====================================================================================
-
--- vacuum propagation in atmos
-minetest.register_abm({
-    label = "atmos -> vacuum replacement",
-    nodenames = {"asteroid:atmos"},
-    neighbors = {"vacuum:vacuum"},
-    interval = 1,
-    chance = 5,
-    min_y = vacuum.space_height,
-    action = vacuum.throttle(1000, function(pos)
-        -- update metrics
-        if metric_space_vacuum_abm ~= nil then
-            metric_space_vacuum_abm.inc()
-        end
-
-        if vacuum.is_pos_in_space(pos) then
-            -- in space, evacuate air
-            if (vacuum.near_atmos(pos, 9) == false) and not vacuum.near_powered_airpump(pos) then
-                minetest.set_node(pos, {
-                    name = "vacuum:vacuum"
-                })
-            end
-        end
-    end)
-})

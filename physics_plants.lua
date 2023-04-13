@@ -30,7 +30,7 @@ minetest.register_abm({
     nodenames = {"group:sapling", "group:plant", "group:flora", "group:flower", "group:leafdecay", "ethereal:banana", -- ethereal compat
                  "ethereal:orange", "ethereal:strawberry"},
     neighbors = {"vacuum:vacuum"},
-    interval = 1,
+    interval = 2,
     chance = 1,
     action = vacuum.throttle(100, function(pos)
         minetest.set_node(pos, {
@@ -45,8 +45,8 @@ minetest.register_abm({
     nodenames = {"group:leaves"},
     neighbors = {"vacuum:vacuum"},
     interval = 3,
-    chance = 1,
-    action = vacuum.throttle(100, function(pos)
+    chance = 2,
+    action = vacuum.throttle(200, function(pos)
         minetest.set_node(pos, {
             name = "vacuum:dead_leaves"
         })

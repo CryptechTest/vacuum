@@ -11,7 +11,8 @@ minetest.register_abm({
             return
         end
 
-        if (not vacuum.near_atmos(pos, 26)) and (not vacuum.near_air(pos, 25)) then
+        -- if (not vacuum.near_atmos(pos, 26)) and (not vacuum.near_air(pos, 25)) then
+        if not vacuum.near_atmos(pos, 25) then
             -- minetest.set_node(pos, {name = "vacuum:vacuum"})
             -- minetest.set_node(pos, {name = "asteroid:atmos"})
             minetest.set_node(pos, {
