@@ -366,8 +366,8 @@ minetest.register_node("vacuum:airpump_active", {
 minetest.register_craft({
     output = "vacuum:airpump",
     recipe = {{"default:steel_ingot", "default:mese_block", "default:steel_ingot"},
-              {"default:diamond", "default:glass", "default:steel_ingot"},
-              {"default:steel_ingot", "default:steelblock", "default:steel_ingot"}}
+              {"default:diamond", "default:glass", "basic_materials:motor"},
+              {"default:steel_ingot", "default:steelblock", "basic_materials:gold_wire"}}
 })
 
 technic.register_machine("LV", "vacuum:airpump", technic.receiver)
