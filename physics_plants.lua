@@ -24,31 +24,40 @@ minetest.register_node("vacuum:dead_leaves", {
     }
 })
 
--- plants in vacuum
-minetest.register_abm({
-    label = "space vacuum plants",
-    nodenames = {"group:sapling", "group:plant", "group:flora", "group:flower", "group:leafdecay", "ethereal:banana", -- ethereal compat
-                 "ethereal:orange", "ethereal:strawberry"},
-    neighbors = {"vacuum:vacuum"},
-    interval = 2,
-    chance = 1,
-    action = vacuum.throttle(100, function(pos)
-        minetest.set_node(pos, {
-            name = "default:dry_shrub"
-        })
-    end)
-})
+function register_physics_plants(height)
 
--- leaves in vacuum
-minetest.register_abm({
-    label = "space vacuum plants",
-    nodenames = {"group:leaves"},
-    neighbors = {"vacuum:vacuum"},
-    interval = 3,
-    chance = 2,
-    action = vacuum.throttle(200, function(pos)
-        minetest.set_node(pos, {
-            name = "vacuum:dead_leaves"
-        })
-    end)
-})
+    -- plants in vacuum
+    minetest.register_abm({
+        label = "space vacuum plants",
+        nodenames = {"group:sapling", "group:plant", "group:flora", "group:flower", "group:leafdecay",
+                     "ethereal:banana", -- ethereal compat
+        "ethereal:orange", "ethereal:strawberry"},
+        neighbors = {"vacuum:vacuum"},
+        interval = 2,
+        chance = 1,
+        max_y = height.end_height,
+        min_y = height.start_height,
+        action = vacuum.throttle(100, function(pos)
+            minetest.set_node(pos, {
+                name = "default:dry_shrub"
+            })
+        end)
+    })
+
+    -- leaves in vacuum
+    minetest.register_abm({
+        label = "space vacuum plants",
+        nodenames = {"group:leaves"},
+        neighbors = {"vacuum:vacuum"},
+        interval = 3,
+        chance = 2,
+        max_y = height.end_height,
+        min_y = height.start_height,
+        action = vacuum.throttle(200, function(pos)
+            minetest.set_node(pos, {
+                name = "vacuum:dead_leaves"
+            })
+        end)
+    })
+
+end

@@ -72,7 +72,7 @@ end
 -- powered
 vacuum.airpump_powered = function(meta)
     local eu_input = meta:get_int("LV" .. "_EU_input")
-    local powered = eu_input >= 100
+    local powered = eu_input > 0
     if powered then
         return true
     end
