@@ -55,11 +55,11 @@ function register_physics_propagation(height)
             end
 
             if (vacuum.is_pos_in_space(pos)) then
-                if vacuum.has_in_range(pos, "vacuum:atmos_thin", 2, 60) and vacuum.near_powered_airpump(pos, 6) then
+                if vacuum.has_in_range(pos, "vacuum:atmos_thin", 2, 60) and vacuum.near_powered_airpump(pos, 4) then
                     minetest.set_node(pos, {
                         name = "vacuum:atmos_thin"
                     })
-                elseif vacuum.has_in_range(pos, "vacuum:atmos_thin", 2, 100) and vacuum.near_powered_airpump(pos, 8) then
+                elseif vacuum.has_in_range(pos, "vacuum:atmos_thin", 2, 100) and vacuum.near_powered_airpump(pos, 5) then
                     minetest.set_node(pos, {
                         name = "vacuum:atmos_thin"
                     })
@@ -91,7 +91,7 @@ function register_physics_propagation(height)
                     name = "air"
                 })
                 -- not near a powered airpump
-            elseif not vacuum.near_powered_airpump(pos, 8) then
+            elseif not vacuum.near_powered_airpump(pos, 4) then
                 if vacuum.has_in_range(pos, "vacuum:vacuum", 1, 3) then
                     minetest.set_node(pos, {
                         name = "vacuum:atmos_thin"
@@ -111,10 +111,10 @@ function register_physics_propagation(height)
         nodenames = {"vacuum:atmos_thick"},
         neighbors = {"vacuum:vacuum"},
         interval = 1,
-        chance = 1, -- 3 ???
+        chance = 10, -- 3 ???
         max_y = height.end_height,
         min_y = height.start_height,
-        action = vacuum.throttle(1000, function(pos)
+        action = vacuum.throttle(2000, function(pos)
             -- update metrics
             if metric_space_vacuum_abm ~= nil then
                 metric_space_vacuum_abm.inc()
@@ -147,7 +147,7 @@ function register_physics_propagation(height)
             end
 
             if vacuum.is_pos_in_space(pos) then
-                if vacuum.near_powered_airpump(pos, 8) then -- 12
+                if vacuum.near_powered_airpump(pos, 5) then -- 12
                     if vacuum.has_in_range(pos, "vacuum:atmos_thick", 1, 5) then
                         minetest.set_node(pos, {
                             name = "vacuum:atmos_thick"
@@ -178,18 +178,18 @@ function register_physics_propagation(height)
         chance = 1,
         max_y = height.end_height,
         min_y = height.start_height,
-        action = vacuum.throttle(2500, function(pos)
+        action = vacuum.throttle(3000, function(pos)
             -- update metrics
             if metric_space_vacuum_abm ~= nil then
                 metric_space_vacuum_abm.inc()
             end
 
             if vacuum.is_pos_in_space(pos) then
-                if vacuum.has_in_range(pos, "vacuum:vacuum", 1, 3) and not vacuum.near_powered_airpump(pos, 10) then
+                if vacuum.has_in_range(pos, "vacuum:vacuum", 1, 3) and not vacuum.near_powered_airpump(pos, 5) then
                     minetest.set_node(pos, {
                         name = "vacuum:vacuum"
                     })
-                elseif vacuum.has_in_range(pos, "vacuum:vacuum", 1, 10) and not vacuum.near_powered_airpump(pos, 7) then
+                elseif vacuum.has_in_range(pos, "vacuum:vacuum", 1, 10) and not vacuum.near_powered_airpump(pos, 4) then
                     minetest.set_node(pos, {
                         name = "vacuum:vacuum"
                     })
@@ -220,11 +220,11 @@ function register_physics_propagation(height)
                 metric_space_vacuum_abm.inc()
             end
 
-            if vacuum.has_in_range(pos, "vacuum:atmos_thin", 1, 5) and vacuum.near_powered_airpump(pos, 10) then
+            if vacuum.has_in_range(pos, "vacuum:atmos_thin", 1, 5) and vacuum.near_powered_airpump(pos, 4) then
                 minetest.set_node(pos, {
                     name = "vacuum:atmos_thick"
                 })
-            elseif vacuum.near_powered_airpump(pos, 5) then
+            elseif vacuum.near_powered_airpump(pos, 2) then
                 minetest.set_node(pos, {
                     name = "vacuum:atmos_thin"
                 })
