@@ -160,10 +160,12 @@ minetest.register_node("vacuum:airpump", {
         }
     },
 
-    after_place_node = function(pos, placer)
+    after_place_node = function(pos, placer, itemstack, pointed_thing)
         local meta = minetest.get_meta(pos)
         meta:set_string("owner", placer:get_player_name() or "")
-        return pipeworks.after_place
+        if data.tube then
+            pipeworks.after_place(pos)
+        end
     end,
 
     on_construct = function(pos)
@@ -249,8 +251,13 @@ minetest.register_node("vacuum:airpump", {
             return inv:room_for_item("main", stack)
         end,
         input_inventory = "main",
-        connect_sides = {left = 1, right = 1, back = 1, bottom = 1}
-        --connect_sides = connect_default
+        connect_sides = {
+            left = 1,
+            right = 1,
+            back = 1,
+            bottom = 1
+        }
+        -- connect_sides = connect_default
     }
 
 })
@@ -275,8 +282,14 @@ minetest.register_node("vacuum:airpump_wait", {
     sounds = default.node_sound_glass_defaults(),
     technic_run = run,
     technic_disabled_machine_name = "vacuum:airpump",
-    after_place_node = pipeworks.after_place,
-    after_dig_node = technic.machine_after_dig_node,
+    after_place_node = function(pos, placer, itemstack, pointed_thing)
+        if data.tube then
+            pipeworks.after_place(pos)
+        end
+    end,
+    after_dig_node = function(pos, oldnode, oldmetadata, digger)
+        return technic.machine_after_dig_node
+    end,
 
     on_receive_fields = function(pos, formname, fields, sender)
         local meta = minetest.get_meta(pos)
@@ -329,8 +342,14 @@ minetest.register_node("vacuum:airpump_active", {
     sounds = default.node_sound_glass_defaults(),
     technic_run = run,
     technic_disabled_machine_name = "vacuum:airpump",
-    after_place_node = pipeworks.after_place,
-    after_dig_node = technic.machine_after_dig_node,
+    after_place_node = function(pos, placer, itemstack, pointed_thing)
+        if data.tube then
+            pipeworks.after_place(pos)
+        end
+    end,
+    after_dig_node = function(pos, oldnode, oldmetadata, digger)
+        return technic.machine_after_dig_node
+    end,
 
     on_receive_fields = function(pos, formname, fields, sender)
         local meta = minetest.get_meta(pos)
