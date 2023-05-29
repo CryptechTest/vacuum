@@ -144,7 +144,7 @@ vacuum.flush_airpump = function(pos)
             end
         end
 
-        toal = total + count
+        total = total + count
 
         if (total > 500) then
             break
