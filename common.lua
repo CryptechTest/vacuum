@@ -42,7 +42,7 @@ function vacuum.near_powered_airpump(pos, range)
     })
 
     local nodes = minetest.find_nodes_in_area(pos1, pos2,
-        { "vacuum:airpump", "vacuum:airpump_wait", "vacuum:airpump_active" })
+        {"vacuum:airpump", "vacuum:airpump_wait", "vacuum:airpump_active"})
     for _, node in ipairs(nodes) do
         local meta = minetest.get_meta(node)
         if vacuum.airpump_active(meta) then
@@ -67,7 +67,7 @@ function vacuum.near_aeri(pos, c)
 
     local count = 0;
     -- local nodes = minetest.find_nodes_in_area(pos1, pos2, {"group:atmosphere"})
-    local nodes = minetest.find_nodes_in_area(pos1, pos2, { "vacuum:atmos_thick" })
+    local nodes = minetest.find_nodes_in_area(pos1, pos2, {"vacuum:atmos_thick"})
     for _, node in ipairs(nodes) do
         count = count + 1
     end
@@ -88,7 +88,7 @@ function vacuum.near_atmos(pos, c)
     })
 
     local count = 0;
-    local nodes = minetest.find_nodes_in_area(pos1, pos2, { "group:atmosphere" })
+    local nodes = minetest.find_nodes_in_area(pos1, pos2, {"group:atmosphere"})
     -- local nodes = minetest.find_nodes_in_area(pos1, pos2, {"vacuum:atmos_thick"})
     for _, node in ipairs(nodes) do
         count = count + 1
@@ -109,7 +109,7 @@ function vacuum.near_air(pos, c)
         z = 1
     })
 
-    local nodes = minetest.find_nodes_in_area(pos1, pos2, { "vacuum:atmos_thick" })
+    local nodes = minetest.find_nodes_in_area(pos1, pos2, {"vacuum:atmos_thick"})
     for _, node in ipairs(nodes) do
         count = count + 1
     end
@@ -129,7 +129,7 @@ function vacuum.near_vacuum(pos, dist)
         z = 1
     })
 
-    local nodes = minetest.find_nodes_in_area(pos1, pos2, { "group:vacuum" })
+    local nodes = minetest.find_nodes_in_area(pos1, pos2, {"group:vacuum"})
     for _, node in ipairs(nodes) do
         count = count + 1
     end
@@ -137,16 +137,16 @@ function vacuum.near_vacuum(pos, dist)
     return count >= c
 end
 
-function vacuum.has_in_area(p, c_name, thres)
+function vacuum.has_in_area(p, c_name, rng, thres)
     local pos = {
         x = p.x,
         y = p.y,
         z = p.z
     }
     local range = {
-        x = 2,
-        y = 1,
-        z = 2
+        x = rng + 1,
+        y = rng + 1,
+        z = rng + 1
     }
     local pos1 = vector.subtract(pos, range)
     local pos2 = vector.add(pos, range)
@@ -162,28 +162,35 @@ function vacuum.has_in_area(p, c_name, thres)
     local count = 0
     local total = 0
 
+    local c_n = minetest.get_content_id(c_name)
+
     for z = pos1.y, pos2.y do
         for y = pos1.z, pos2.z do
             for x = pos1.x, pos2.x do
                 local index = area:index(x, y, z)
                 -- if data[index] == c_vacuum or data[index] == c_atmos or data[index] == c_air or data[index] == c_aer then
                 -- if data[index] == c_id then
-                if minetest.get_node({
+                --[[if minetest.get_node({
                         x = x,
                         y = y,
                         z = z
                     }).name == c_name then
                     count = count + 1
+                end--]]
+
+                if data[index] == c_n then
+                    count = count + 1
                 end
-                total = count + 1
+                total = total + 1
             end
         end
     end
 
-    if count > 0 then
-        return (count / total) <= thres
+    if total > 0 then
+        minetest.log("Has " .. count)
+        return count >= thres
     end
-    return count > 0
+    return false
 end
 
 function vacuum.has_in_range(p, c_name, rng, thres)
@@ -200,7 +207,7 @@ function vacuum.has_in_range(p, c_name, rng, thres)
     local pos1 = vector.subtract(pos, range)
     local pos2 = vector.add(pos, range)
 
-    local nodes = minetest.find_nodes_in_area(pos1, pos2, { c_name })
+    local nodes = minetest.find_nodes_in_area(pos1, pos2, {c_name})
     return #nodes >= thres
 end
 
@@ -219,7 +226,7 @@ function vacuum.replace_nodes_at(p, rad, c_name, c_replace)
     local pos1 = vector.subtract(pos, range)
     local pos2 = vector.add(pos, range)
 
-    local nodes = minetest.find_nodes_in_area(pos1, pos2, { c_name })
+    local nodes = minetest.find_nodes_in_area(pos1, pos2, {c_name})
 
     for _, node in ipairs(nodes) do
         minetest.set_node(node, {

@@ -15,11 +15,11 @@ function register_physics_propagation(height)
         label = "vacuum -> thin atmos replacement",
         nodenames = {"vacuum:vacuum"},
         neighbors = {"vacuum:atmos_thick"},
-        interval = 1,
+        interval = 3,
         chance = 1, -- this need to be 1..
         max_y = height.end_height,
         min_y = height.start_height,
-        action = vacuum.throttle(1250, function(pos)
+        action = vacuum.throttle(2500, function(pos)
             -- update metrics
             if metric_space_vacuum_abm ~= nil then
                 metric_space_vacuum_abm.inc()
@@ -44,11 +44,11 @@ function register_physics_propagation(height)
         label = "vacuum -> atmos_thin replacement",
         nodenames = {"vacuum:vacuum"},
         neighbors = {"vacuum:atmos_thin"},
-        interval = 1,
+        interval = 3,
         chance = 2, -- higher chance of thin appears
         max_y = height.end_height,
         min_y = height.start_height,
-        action = vacuum.throttle(1250, function(pos)
+        action = vacuum.throttle(2500, function(pos)
             -- update metrics 
             if metric_space_vacuum_abm ~= nil then
                 metric_space_vacuum_abm.inc()
@@ -75,11 +75,11 @@ function register_physics_propagation(height)
         label = "thick atnos -> thin replacement",
         nodenames = {"vacuum:atmos_thick"},
         neighbors = {"vacuum:atmos_thin"},
-        interval = 1,
+        interval = 3,
         chance = 1,
         max_y = height.end_height,
         min_y = height.start_height,
-        action = vacuum.throttle(1000, function(pos)
+        action = vacuum.throttle(2000, function(pos)
             -- update metrics
             if metric_space_vacuum_abm ~= nil then
                 metric_space_vacuum_abm.inc()
@@ -110,8 +110,8 @@ function register_physics_propagation(height)
         label = "vacuum -> thin atmos replacement",
         nodenames = {"vacuum:atmos_thick"},
         neighbors = {"vacuum:vacuum"},
-        interval = 1,
-        chance = 10, -- 3 ???
+        interval = 2,
+        chance = 1, -- 3 ???
         max_y = height.end_height,
         min_y = height.start_height,
         action = vacuum.throttle(2000, function(pos)
@@ -136,11 +136,11 @@ function register_physics_propagation(height)
         label = "aer -> thick atmos replacement",
         nodenames = {"vacuum:atmos_thin", "air", "technic:dummy_light_source"},
         neighbors = {"vacuum:atmos_thick"},
-        interval = 1,
+        interval = 3,
         chance = 2,
         max_y = height.end_height,
         min_y = height.start_height,
-        action = vacuum.throttle(1000, function(pos)
+        action = vacuum.throttle(2000, function(pos)
             -- update metrics
             if metric_space_vacuum_abm ~= nil then
                 metric_space_vacuum_abm.inc()
@@ -174,11 +174,11 @@ function register_physics_propagation(height)
         label = "thin atmos -> vacuum replacement",
         nodenames = {"vacuum:atmos_thin", "air"},
         neighbors = {"vacuum:vacuum"},
-        interval = 1,
+        interval = 2,
         chance = 1,
         max_y = height.end_height,
         min_y = height.start_height,
-        action = vacuum.throttle(3000, function(pos)
+        action = vacuum.throttle(2000, function(pos)
             -- update metrics
             if metric_space_vacuum_abm ~= nil then
                 metric_space_vacuum_abm.inc()
@@ -210,11 +210,11 @@ function register_physics_propagation(height)
         label = "thin atmos + vacuum -> atmos replacement",
         nodenames = {"vacuum:atmos_thin", "vacuum:vacuum"},
         neighbors = {"vacuum:airpump", "vacuum:airpump_wait", "vacuum:airpump_active"},
-        interval = 2,
+        interval = 5,
         chance = 1,
         max_y = height.end_height,
         min_y = height.start_height,
-        action = vacuum.throttle(1000, function(pos)
+        action = vacuum.throttle(2000, function(pos)
             -- update metrics
             if metric_space_vacuum_abm ~= nil then
                 metric_space_vacuum_abm.inc()
