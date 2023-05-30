@@ -25,6 +25,10 @@ function register_physics_propagation(height)
                 metric_space_vacuum_abm.inc()
             end
 
+            if vacuum.is_pos_in_spawn(pos) then
+                return
+            end
+            
             if vacuum.is_pos_in_space(pos) then
                 if vacuum.near_powered_airpump(pos, 3) then
                     minetest.set_node(pos, {
@@ -52,6 +56,10 @@ function register_physics_propagation(height)
             -- update metrics 
             if metric_space_vacuum_abm ~= nil then
                 metric_space_vacuum_abm.inc()
+            end
+
+            if vacuum.is_pos_in_spawn(pos) then
+                return
             end
 
             if (vacuum.is_pos_in_space(pos)) then
@@ -83,6 +91,10 @@ function register_physics_propagation(height)
             -- update metrics
             if metric_space_vacuum_abm ~= nil then
                 metric_space_vacuum_abm.inc()
+            end
+            
+            if vacuum.is_pos_in_spawn(pos) then
+                return
             end
 
             if not vacuum.is_pos_in_space(pos) then
@@ -119,6 +131,10 @@ function register_physics_propagation(height)
             if metric_space_vacuum_abm ~= nil then
                 metric_space_vacuum_abm.inc()
             end
+            
+            if vacuum.is_pos_in_spawn(pos) then
+                return
+            end
 
             if vacuum.is_pos_in_space(pos) then
                 minetest.set_node(pos, {
@@ -144,6 +160,10 @@ function register_physics_propagation(height)
             -- update metrics
             if metric_space_vacuum_abm ~= nil then
                 metric_space_vacuum_abm.inc()
+            end
+            
+            if vacuum.is_pos_in_spawn(pos) then
+                return
             end
 
             if vacuum.is_pos_in_space(pos) then
@@ -183,6 +203,10 @@ function register_physics_propagation(height)
             if metric_space_vacuum_abm ~= nil then
                 metric_space_vacuum_abm.inc()
             end
+            
+            if vacuum.is_pos_in_spawn(pos) then
+                return
+            end
 
             if vacuum.is_pos_in_space(pos) then
                 if vacuum.has_in_range(pos, "vacuum:vacuum", 1, 3) and not vacuum.near_powered_airpump(pos, 5) then
@@ -218,6 +242,10 @@ function register_physics_propagation(height)
             -- update metrics
             if metric_space_vacuum_abm ~= nil then
                 metric_space_vacuum_abm.inc()
+            end
+            
+            if vacuum.is_pos_in_spawn(pos) then
+                return
             end
 
             if vacuum.has_in_range(pos, "vacuum:atmos_thin", 1, 5) and vacuum.near_powered_airpump(pos, 4) then

@@ -26,6 +26,10 @@ function register_physics_drop(height)
         min_y = height.start_height,
         action = vacuum.throttle(100, function(pos)
 
+            if vacuum.is_pos_in_spawn(pos) then
+                return
+            end
+            
             if not vacuum.is_pos_in_space(pos) or vacuum.near_powered_airpump(pos, 3) then
                 return
             end

@@ -13,6 +13,9 @@ function register_physics_soil(height)
         max_y = height.end_height,
         min_y = height.start_height,
         action = vacuum.throttle(100, function(pos)
+            if vacuum.is_pos_in_spawn(pos) then
+                return
+            end
             minetest.set_node(pos, {
                 name = "default:gravel"
             })

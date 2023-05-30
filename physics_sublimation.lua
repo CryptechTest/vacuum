@@ -13,6 +13,10 @@ function register_physics_sublimation(height)
             if not vacuum.is_pos_in_space(pos) or vacuum.near_powered_airpump(pos) then
                 return
             end
+            
+            if vacuum.is_pos_in_spawn(pos) then
+                return
+            end
 
             -- if (not vacuum.near_atmos(pos, 26)) and (not vacuum.near_air(pos, 25)) then
             if not vacuum.near_atmos(pos, 25) then

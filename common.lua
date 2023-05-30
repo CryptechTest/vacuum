@@ -24,6 +24,32 @@ vacuum.is_pos_in_space = function(pos)
     return check_pos_in_space(pos)
 end
 
+local check_pos_in_spawn = function(pos)
+    local spawn_spoint = minetest.setting_get_pos("static_spawnpoint") or {
+        x = 0,
+        y = 4500,
+        z = 0
+    }
+
+    local in_x = false
+    local in_y = false
+    local in_z = false
+    if (pos.x <= spawn_spoint.x +200 and pos.x >= spawn_spoint.x -200) then
+        in_x = true
+    end
+    if (pos.y <= spawn_spoint.y +200 and pos.y >= spawn_spoint.y -200) then
+        in_y = true
+    end
+    if (pos.x <= spawn_spoint.z +200 and pos.z >= spawn_spoint.z -200) then
+        in_z = true
+    end
+    return in_x and in_y and in_z
+end
+
+vacuum.is_pos_in_spawn = function(pos)
+    return check_pos_in_spawn(pos)
+end
+
 -- returns true if the position is near a powered air pump
 function vacuum.near_powered_airpump(pos)
     return near_powered_airpump(pos, vacuum.air_pump_range)
