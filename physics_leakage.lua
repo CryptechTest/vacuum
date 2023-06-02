@@ -184,6 +184,10 @@ function register_physics_leakage(height)
                 metric_space_vacuum_leak_abm.inc()
             end
 
+            if vacuum.is_pos_in_spawn(pos) then
+                return
+            end
+            
             if not vacuum.is_pos_in_space(pos) then -- or vacuum.near_powered_airpump(pos) then
                 -- on earth: TODO: replace vacuum with air
                 return
