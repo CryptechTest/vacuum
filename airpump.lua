@@ -90,7 +90,7 @@ local run = function(pos, node)
         else
             if not vacuum.has_empty_air_bottle(meta:get_inventory()) then
                 technic.swap_node(pos, machine_node)
-                meta:set_string("infotext", S("%s Idle"):format(machine_desc_tier))
+                meta:set_string("infotext", machine_desc_tier .. S(" Idle"))
                 meta:set_int(tier .. "_EU_demand", 0)
                 meta:set_int("src_time", 0)
                 return;
