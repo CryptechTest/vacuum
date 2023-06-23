@@ -74,7 +74,7 @@ local run = function(pos, node)
     while true do
         if not vacuum.airpump_enabled(meta) then
             technic.swap_node(pos, machine_node)
-            meta:set_string("infotext", S("%s Idle"):format(machine_desc_tier))
+            meta:set_string("infotext", machine_desc_tier .. S(" Idle"))
             meta:set_int(tier .. "_EU_demand", 0)
             meta:set_int("src_time", 0)
             return
@@ -82,7 +82,7 @@ local run = function(pos, node)
         if vacuum.is_pos_in_space(pos) then
             if not vacuum.has_full_air_bottle(meta:get_inventory()) then
                 technic.swap_node(pos, machine_node)
-                meta:set_string("infotext", S("%s Idle"):format(machine_desc_tier))
+                meta:set_string("infotext", machine_desc_tier .. S(" Idle"))
                 meta:set_int(tier .. "_EU_demand", 0)
                 meta:set_int("src_time", 0)
                 return;
@@ -101,11 +101,11 @@ local run = function(pos, node)
         if (math.random(1, 3) > 1) then
             technic.swap_node(pos, machine_node .. "_wait")
         end
-        meta:set_string("infotext", S("%s Active"):format(machine_desc_tier))
+        meta:set_string("infotext", machine_desc_tier .. S(" Active"))
         if meta:get_int("src_time") < round(time * 10) then
             if not powered then
                 technic.swap_node(pos, machine_node)
-                meta:set_string("infotext", S("%s Unpowered"):format(machine_desc_tier))
+                meta:set_string("infotext", machine_desc_tier .. S("%s Unpowered"))
             end
             return
         end
