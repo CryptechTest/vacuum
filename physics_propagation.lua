@@ -19,7 +19,7 @@ function register_physics_propagation(height)
         chance = 1, -- this need to be 1..
         max_y = height.end_height,
         min_y = height.start_height,
-        action = vacuum.throttle(2500, function(pos)
+        action = vacuum.throttle(1000, function(pos, node)
             -- update metrics
             if metric_space_vacuum_abm ~= nil then
                 metric_space_vacuum_abm.inc()
@@ -28,13 +28,13 @@ function register_physics_propagation(height)
             if vacuum.is_pos_in_spawn(pos) then
                 return
             end
-            
+
             if vacuum.is_pos_in_space(pos) then
                 if vacuum.near_powered_airpump(pos, 3) then
                     minetest.set_node(pos, {
                         name = "vacuum:atmos_thin"
                     })
-                elseif vacuum.has_in_range(pos, "vacuum:atmos_thick", 1, 4) then
+                elseif vacuum.has_in_area(pos, "vacuum:atmos_thick", 1, 4) then
                     minetest.set_node(pos, {
                         name = "vacuum:atmos_thin"
                     })
@@ -52,7 +52,7 @@ function register_physics_propagation(height)
         chance = 2, -- higher chance of thin appears
         max_y = height.end_height,
         min_y = height.start_height,
-        action = vacuum.throttle(2500, function(pos)
+        action = vacuum.throttle(1000, function(pos, node)
             -- update metrics 
             if metric_space_vacuum_abm ~= nil then
                 metric_space_vacuum_abm.inc()
@@ -63,11 +63,11 @@ function register_physics_propagation(height)
             end
 
             if (vacuum.is_pos_in_space(pos)) then
-                if vacuum.has_in_range(pos, "vacuum:atmos_thin", 2, 60) and vacuum.near_powered_airpump(pos, 4) then
+                if vacuum.near_powered_airpump(pos, 4) and vacuum.has_in_area(pos, "vacuum:atmos_thin", 2, 60) then
                     minetest.set_node(pos, {
                         name = "vacuum:atmos_thin"
                     })
-                elseif vacuum.has_in_range(pos, "vacuum:atmos_thin", 2, 100) and vacuum.near_powered_airpump(pos, 5) then
+                elseif vacuum.near_powered_airpump(pos, 5) and vacuum.has_in_area(pos, "vacuum:atmos_thin", 2, 100) then
                     minetest.set_node(pos, {
                         name = "vacuum:atmos_thin"
                     })
@@ -87,12 +87,12 @@ function register_physics_propagation(height)
         chance = 1,
         max_y = height.end_height,
         min_y = height.start_height,
-        action = vacuum.throttle(2000, function(pos)
+        action = vacuum.throttle(1000, function(pos, node)
             -- update metrics
             if metric_space_vacuum_abm ~= nil then
                 metric_space_vacuum_abm.inc()
             end
-            
+
             if vacuum.is_pos_in_spawn(pos) then
                 return
             end
@@ -104,11 +104,11 @@ function register_physics_propagation(height)
                 })
                 -- not near a powered airpump
             elseif not vacuum.near_powered_airpump(pos, 4) then
-                if vacuum.has_in_range(pos, "vacuum:vacuum", 1, 3) then
+                if vacuum.has_in_area(pos, "vacuum:vacuum", 1, 3) then
                     minetest.set_node(pos, {
                         name = "vacuum:atmos_thin"
                     })
-                elseif vacuum.has_in_range(pos, "vacuum:atmos_thin", 1, 10) then
+                elseif vacuum.has_in_area(pos, "vacuum:atmos_thin", 1, 10) then
                     minetest.set_node(pos, {
                         name = "vacuum:atmos_thin"
                     })
@@ -126,12 +126,12 @@ function register_physics_propagation(height)
         chance = 1, -- 3 ???
         max_y = height.end_height,
         min_y = height.start_height,
-        action = vacuum.throttle(2000, function(pos)
+        action = vacuum.throttle(1000, function(pos, node)
             -- update metrics
             if metric_space_vacuum_abm ~= nil then
                 metric_space_vacuum_abm.inc()
             end
-            
+
             if vacuum.is_pos_in_spawn(pos) then
                 return
             end
@@ -156,30 +156,29 @@ function register_physics_propagation(height)
         chance = 2,
         max_y = height.end_height,
         min_y = height.start_height,
-        action = vacuum.throttle(2000, function(pos)
+        action = vacuum.throttle(1000, function(pos, node)
             -- update metrics
             if metric_space_vacuum_abm ~= nil then
                 metric_space_vacuum_abm.inc()
             end
-            
+
             if vacuum.is_pos_in_spawn(pos) then
                 return
             end
 
             if vacuum.is_pos_in_space(pos) then
                 if vacuum.near_powered_airpump(pos, 5) then -- 12
-                    if vacuum.has_in_range(pos, "vacuum:atmos_thick", 1, 5) then
+                    if vacuum.has_in_area(pos, "vacuum:atmos_thick", 1, 5) then
                         minetest.set_node(pos, {
                             name = "vacuum:atmos_thick"
                         })
-                    elseif vacuum.has_in_range(pos, "vacuum:atmos_thin", 1, 1) and
-                        not vacuum.has_in_range(pos, "vacuum:vacuum", 1, 3) then
+                    elseif vacuum.has_in_area(pos, "vacuum:atmos_thin", 1, 1) and
+                        not vacuum.has_in_area(pos, "vacuum:vacuum", 1, 3) then
                         minetest.set_node(pos, {
                             name = "vacuum:atmos_thick"
                         })
                     end
                 end
-                local node = minetest.get_node(pos)
                 if node.name == "air" or node.name == "technic:dummy_light_source" then
                     minetest.set_node(pos, {
                         name = "vacuum:atmos_thick"
@@ -198,29 +197,29 @@ function register_physics_propagation(height)
         chance = 1,
         max_y = height.end_height,
         min_y = height.start_height,
-        action = vacuum.throttle(2000, function(pos)
+        action = vacuum.throttle(1000, function(pos, node)
             -- update metrics
             if metric_space_vacuum_abm ~= nil then
                 metric_space_vacuum_abm.inc()
             end
-            
+
             if vacuum.is_pos_in_spawn(pos) then
                 return
             end
 
             if vacuum.is_pos_in_space(pos) then
-                if vacuum.has_in_range(pos, "vacuum:vacuum", 1, 3) and not vacuum.near_powered_airpump(pos, 5) then
+                if not vacuum.near_powered_airpump(pos, 5) and vacuum.has_in_area(pos, "vacuum:vacuum", 1, 3) then
                     minetest.set_node(pos, {
                         name = "vacuum:vacuum"
                     })
-                elseif vacuum.has_in_range(pos, "vacuum:vacuum", 1, 10) and not vacuum.near_powered_airpump(pos, 4) then
+                elseif not vacuum.near_powered_airpump(pos, 4) and vacuum.has_in_area(pos, "vacuum:vacuum", 1, 10) then
                     minetest.set_node(pos, {
                         name = "vacuum:vacuum"
                     })
-                elseif vacuum.has_in_range(pos, "vacuum:vacuum", 1, 25) then
+                    --[[elseif vacuum.has_in_area(pos, "vacuum:vacuum", 1, 25) then
                     minetest.set_node(pos, {
                         name = "vacuum:vacuum"
-                    })
+                    })--]]
                 end
             end
         end)
@@ -238,17 +237,17 @@ function register_physics_propagation(height)
         chance = 1,
         max_y = height.end_height,
         min_y = height.start_height,
-        action = vacuum.throttle(2000, function(pos)
+        action = vacuum.throttle(500, function(pos, node)
             -- update metrics
             if metric_space_vacuum_abm ~= nil then
                 metric_space_vacuum_abm.inc()
             end
-            
+
             if vacuum.is_pos_in_spawn(pos) then
                 return
             end
 
-            if vacuum.has_in_range(pos, "vacuum:atmos_thin", 1, 5) and vacuum.near_powered_airpump(pos, 4) then
+            if vacuum.near_powered_airpump(pos, 4) and vacuum.has_in_area(pos, "vacuum:atmos_thin", 1, 5) then
                 minetest.set_node(pos, {
                     name = "vacuum:atmos_thick"
                 })

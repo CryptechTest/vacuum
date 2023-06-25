@@ -33,11 +33,11 @@ function register_physics_leakage(height)
         chance = 3,
         max_y = height.end_height,
         min_y = height.start_height,
-        action = vacuum.throttle(250, function(pos)
+        action = vacuum.throttle(250, function(pos, node)
             if metric_space_vacuum_leak_abm ~= nil then
                 metric_space_vacuum_leak_abm.inc()
             end
-            
+
             if vacuum.is_pos_in_spawn(pos) then
                 return
             end
@@ -46,7 +46,7 @@ function register_physics_leakage(height)
                 -- on earth: TODO: replace vacuum with air
                 return
             else
-                local node = minetest.get_node(pos)
+                -- local node = minetest.get_node(pos)
 
                 if node.name == "pipeworks:entry_panel_empty" or node.name == "pipeworks:entry_panel_loaded" then
                     -- air thight pipes
@@ -106,11 +106,11 @@ function register_physics_leakage(height)
         chance = 3,
         max_y = height.end_height,
         min_y = height.start_height,
-        action = vacuum.throttle(250, function(pos)
+        action = vacuum.throttle(250, function(pos, node)
             if metric_space_vacuum_leak_abm ~= nil then
                 metric_space_vacuum_leak_abm.inc()
             end
-            
+
             if vacuum.is_pos_in_spawn(pos) then
                 return
             end
@@ -119,7 +119,7 @@ function register_physics_leakage(height)
                 -- on earth: TODO: replace vacuum with air
                 return
             else
-                local node = minetest.get_node(pos)
+                -- local node = minetest.get_node(pos)
 
                 if node.name == "pipeworks:entry_panel_empty" or node.name == "pipeworks:entry_panel_loaded" then
                     -- air thight pipes
@@ -179,7 +179,7 @@ function register_physics_leakage(height)
         chance = 2,
         max_y = height.end_height,
         min_y = height.start_height,
-        action = vacuum.throttle(250, function(pos)
+        action = vacuum.throttle(250, function(pos, node)
             if metric_space_vacuum_leak_abm ~= nil then
                 metric_space_vacuum_leak_abm.inc()
             end
@@ -187,12 +187,12 @@ function register_physics_leakage(height)
             if vacuum.is_pos_in_spawn(pos) then
                 return
             end
-            
+
             if not vacuum.is_pos_in_space(pos) then -- or vacuum.near_powered_airpump(pos) then
                 -- on earth: TODO: replace vacuum with air
                 return
             else
-                local node = minetest.get_node(pos)
+                -- local node = minetest.get_node(pos)
 
                 local door = minetest.get_item_group(node.name, "door")
 

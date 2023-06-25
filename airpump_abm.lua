@@ -118,8 +118,8 @@ local function flush_area(pos)
     })
     local data = manip:get_data()
 
-    for z = pos1.y, pos2.y do
-        for y = pos1.z, pos2.z do
+    for y = pos1.y, pos2.y do
+        for z = pos1.z, pos2.z do
             for x = pos1.x, pos2.x do
 
                 local index = area:index(x, y, z)
@@ -181,7 +181,7 @@ minetest.register_abm({
 
                 for i, node in ipairs(nodes_thin) do
                     if node ~= nil then
-                        if (vacuum.has_in_range(pos, "vacuum:atmos_thin", 1, 7)) then
+                        if (vacuum.has_in_area(pos, "vacuum:atmos_thin", 1, 7)) then
                             minetest.set_node(node, {
                                 name = "vacuum:atmos_thick"
                             })
@@ -193,7 +193,7 @@ minetest.register_abm({
                     if node ~= nil then
                         count = count + 1
 
-                        if (vacuum.has_in_range(pos, "vacuum:atmos_thin", 1, 8)) then
+                        if (vacuum.has_in_area(pos, "vacuum:atmos_thin", 1, 8)) then
                             minetest.set_node(node, {
                                 name = "vacuum:atmos_thin"
                             })
@@ -209,7 +209,7 @@ minetest.register_abm({
                                 gain = 0.3
                             })
                         end
-                        -- if (vacuum.has_in_range(pos, "vacuum:atmos_thin", 2, 3)) then
+                        -- if (vacuum.has_in_area(pos, "vacuum:atmos_thin", 2, 3)) then
                         --	if (node.name == "vacuum:atmos_thin") then
                         --		minetest.set_node(node, {name = "vacuum:atmos_thick"})
                         --		vacuum.replace_nodes_at(pos, 2, node.name, "vacuum:atmos_thick")

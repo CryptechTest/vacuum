@@ -51,11 +51,10 @@ vacuum.is_pos_in_spawn = function(pos)
 end
 
 -- returns true if the position is near a powered air pump
-function vacuum.near_powered_airpump(pos)
-    return near_powered_airpump(pos, vacuum.air_pump_range)
-end
-
 function vacuum.near_powered_airpump(pos, range)
+    if range == nil then
+        range = vacuum.air_pump_range
+    end
     local pos1 = vector.subtract(pos, {
         x = range,
         y = range,
@@ -170,9 +169,9 @@ function vacuum.has_in_area(p, c_name, rng, thres)
         z = p.z
     }
     local range = {
-        x = rng + 1,
-        y = rng + 1,
-        z = rng + 1
+        x = rng,
+        y = rng,
+        z = rng
     }
     local pos1 = vector.subtract(pos, range)
     local pos2 = vector.add(pos, range)
@@ -190,8 +189,8 @@ function vacuum.has_in_area(p, c_name, rng, thres)
 
     local c_n = minetest.get_content_id(c_name)
 
-    for z = pos1.y, pos2.y do
-        for y = pos1.z, pos2.z do
+    for y = pos1.y, pos2.y do
+        for z = pos1.z, pos2.z do
             for x = pos1.x, pos2.x do
                 local index = area:index(x, y, z)
                 -- if data[index] == c_vacuum or data[index] == c_atmos or data[index] == c_air or data[index] == c_aer then
@@ -213,8 +212,9 @@ function vacuum.has_in_area(p, c_name, rng, thres)
     end
 
     if total > 0 then
-        minetest.log("Has " .. count)
-        return count >= thres
+        local res = count >= thres
+        --minetest.log("Has " .. count .. " for " .. c_name .. "  Has: " .. tostring(res))
+        return res
     end
     return false
 end

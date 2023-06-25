@@ -24,17 +24,17 @@ function register_physics_drop(height)
         chance = 1,
         max_y = height.end_height,
         min_y = height.start_height,
-        action = vacuum.throttle(100, function(pos)
+        action = vacuum.throttle(100, function(pos, node)
 
             if vacuum.is_pos_in_spawn(pos) then
                 return
             end
-            
+
             if not vacuum.is_pos_in_space(pos) or vacuum.near_powered_airpump(pos, 3) then
                 return
             end
 
-            local node = minetest.get_node(pos)
+            -- local node = minetest.get_node(pos)
             -- minetest.set_node(pos, {name = "vacuum:vacuum"})
             minetest.set_node(pos, {
                 name = "vacuum:atmos_thin"
