@@ -9,8 +9,7 @@ if has_monitoring then
 end
 
 -- air leaking nodes
-local leaky_nodes = { -- "group:door", "group:soil",
-"group:sand", "group:pipe", "group:tube"}
+local leaky_nodes = {"group:soil", "group:sand", "group:pipe", "group:tube"}
 
 if has_mesecons_random then
     table.insert(leaky_nodes, "mesecons_random:ghoststone_active")
@@ -33,7 +32,7 @@ function register_physics_leakage(height)
         chance = 3,
         max_y = height.end_height,
         min_y = height.start_height,
-        action = vacuum.throttle(250, function(pos, node)
+        action = vacuum.throttle(2500, function(pos, node)
             if metric_space_vacuum_leak_abm ~= nil then
                 metric_space_vacuum_leak_abm.inc()
             end
@@ -97,13 +96,14 @@ function register_physics_leakage(height)
         end)
     })
 
+    --[[
     -- depressurize through leaky nodes
     minetest.register_abm({
         label = "space vacuum depressurize",
         nodenames = "group:soil",
         neighbors = {"vacuum:vacuum"},
         interval = 3,
-        chance = 3,
+        chance = 4, -- 3
         max_y = height.end_height,
         min_y = height.start_height,
         action = vacuum.throttle(250, function(pos, node)
@@ -168,7 +168,7 @@ function register_physics_leakage(height)
                 end
             end
         end)
-    })
+    })--]]
 
     -- depressurize through door nodes
     minetest.register_abm({

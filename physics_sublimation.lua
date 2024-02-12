@@ -6,7 +6,7 @@ function register_physics_sublimation(height)
         nodenames = {"group:snowy"},
         neighbors = {"vacuum:vacuum"},
         interval = 5,
-        chance = 1,
+        chance = 2, -- 1
         max_y = height.end_height,
         min_y = height.start_height,
         action = vacuum.throttle(500, function(pos, node)
