@@ -34,13 +34,13 @@ local check_pos_in_spawn = function(pos)
     local in_x = false
     local in_y = false
     local in_z = false
-    if (pos.x <= spawn_spoint.x +200 and pos.x >= spawn_spoint.x -200) then
+    if (pos.x <= spawn_spoint.x + 200 and pos.x >= spawn_spoint.x - 200) then
         in_x = true
     end
-    if (pos.y <= spawn_spoint.y +200 and pos.y >= spawn_spoint.y -200) then
+    if (pos.y <= spawn_spoint.y + 200 and pos.y >= spawn_spoint.y - 200) then
         in_y = true
     end
-    if (pos.x <= spawn_spoint.z +200 and pos.z >= spawn_spoint.z -200) then
+    if (pos.x <= spawn_spoint.z + 200 and pos.z >= spawn_spoint.z - 200) then
         in_z = true
     end
     return in_x and in_y and in_z
@@ -213,7 +213,7 @@ function vacuum.has_in_area(p, c_name, rng, thres)
 
     if total > 0 then
         local res = count >= thres
-        --minetest.log("Has " .. count .. " for " .. c_name .. "  Has: " .. tostring(res))
+        -- minetest.log("Has " .. count .. " for " .. c_name .. "  Has: " .. tostring(res))
         return res
     end
     return false
@@ -260,4 +260,53 @@ function vacuum.replace_nodes_at(p, rad, c_name, c_replace)
         })
         -- vacuum.replace_nodes_at(noce, rad - 1, c_name, c_replace)
     end
+end
+
+-- get nodes in area
+function vacuum.get_area_nodes(p, dist)
+    local pos = {
+        x = p.x,
+        y = p.y,
+        z = p.z
+    }
+    local range = {
+        x = dist,
+        y = dist,
+        z = dist
+    }
+    local pos1 = vector.subtract(pos, range)
+    local pos2 = vector.add(pos, range)
+    -- get voxel area manip
+    local manip = minetest.get_voxel_manip()
+    local e1, e2 = manip:read_from_map(pos1, pos2)
+    local area = VoxelArea:new({
+        MinEdge = e1,
+        MaxEdge = e2
+    })
+    return pos1, pos2, area, manip:get_data();
+end
+
+function vacuum.has_in_area_data(pos1, pos2, area, data, c_name, thres)
+    local count = 0
+    local total = 0
+    local c_n = minetest.get_content_id(c_name)
+
+    for y = pos1.y, pos2.y do
+        for z = pos1.z, pos2.z do
+            for x = pos1.x, pos2.x do
+                local index = area:index(x, y, z)
+                if data[index] == c_n then
+                    count = count + 1
+                end
+                total = total + 1
+            end
+        end
+    end
+
+    if total > 0 then
+        local result = count >= thres
+        -- minetest.log("Has " .. count .. " for " .. c_name .. "  Has: " .. tostring(res))
+        return result
+    end
+    return false
 end
