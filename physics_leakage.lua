@@ -198,8 +198,9 @@ function register_physics_leakage(height)
 
                 -- in space: replace air with atmos_thin
                 local surrounding_vac = minetest.find_node_near(pos, 1, {"vacuum:vacuum"})
+                local surrounding_atmos = minetest.find_node_near(pos, 1, {"vacuum:atmos_thick"})
 
-                if surrounding_vac ~= nil then
+                if surrounding_vac ~= nil and surrounding_atmos ~= nil then
                     if vacuum.debug then
                         -- debug mode, set
                         minetest.set_node(surrounding_vac, {
@@ -214,14 +215,12 @@ function register_physics_leakage(height)
                     end
                 end
 
-                local surrounding_atmos = minetest.find_node_near(pos, 1, {"vacuum:atmos_thick"})
-
                 -- if door is open
-                if surrounding_atmos ~= nil and door == 2 then
+                if surrounding_vac ~= nil and surrounding_atmos == nil and door == 2 then
                     minetest.set_node(surrounding_atmos, {
-                        name = "vacuum:atmos_thin"
+                        name = "vacuum:vacuum"
                     })
-                elseif surrounding_vac ~= nil and door == 2 then
+                elseif surrounding_vac ~= nil and surrounding_vac ~= nil and door == 2 then
                     minetest.set_node(surrounding_atmos, {
                         name = "vacuum:atmos_thin"
                     })

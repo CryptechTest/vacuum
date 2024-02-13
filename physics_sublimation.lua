@@ -5,7 +5,7 @@ function register_physics_sublimation(height)
         label = "space vacuum sublimate",
         nodenames = {"group:snowy"},
         neighbors = {"vacuum:vacuum"},
-        interval = 5,
+        interval = 3,
         chance = 2, -- 1
         max_y = height.end_height,
         min_y = height.start_height,

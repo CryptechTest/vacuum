@@ -310,3 +310,50 @@ function vacuum.has_in_area_data(pos1, pos2, area, data, c_name, thres)
     end
     return false
 end
+
+function vacuum.spawn_particle(pos, dir_x, dir_y, dir_z, acl_x, acl_y, acl_z, lvl, time)
+    local texture = "vacuum_air_particle_1.png"
+    if (math.random() > 0.5) then
+        texture = "vacuum_air_particle_1.png^[transformR90]"
+    end
+    if (math.random() > 0.5) then
+        texture = texture .. "^[colorize:#4aebf7:21"
+    end
+    local prt = {
+        texture = texture,
+        vel = 1,
+        time = time or 6,
+        size = 3 + (lvl or 1),
+        glow = 3,
+        cols = true
+    }
+
+    local v = vector.new()
+    v.x = 0.0001
+    v.y = 0.001
+    v.z = 0.0001
+    if math.random(1, 10) > 1 then
+        local rx = dir_x * prt.vel * -math.random(0.3 * 100, 0.7 * 100) / 100
+        local ry = dir_y * prt.vel * -math.random(0.3 * 100, 0.6 * 100) / 100
+        local rz = dir_z * prt.vel * -math.random(0.3 * 100, 0.7 * 100) / 100
+        minetest.add_particle({
+            pos = pos,
+            velocity = vector.add(v, {
+                x = rx,
+                y = ry,
+                z = rz
+            }),
+            acceleration = {
+                x = acl_x,
+                y = acl_y + math.random(-0.008, 0.0001),
+                z = acl_z
+            },
+            expirationtime = ((math.random() / 5) + 0.2) * prt.time,
+            size = ((math.random(0.65, 0.90)) * 2 + 0.1) * prt.size,
+            collisiondetection = prt.cols,
+            vertical = false,
+            texture = prt.texture,
+            glow = prt.glow
+        })
+    end
+end

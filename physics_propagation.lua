@@ -15,7 +15,7 @@ function register_physics_propagation(height)
         label = "vacuum -> thin atmos replacement",
         nodenames = {"vacuum:vacuum"},
         neighbors = {"vacuum:atmos_thick"},
-        interval = 3,
+        interval = 1,
         chance = 1, -- this need to be 1..
         max_y = height.end_height,
         min_y = height.start_height,
@@ -48,7 +48,7 @@ function register_physics_propagation(height)
         label = "vacuum -> atmos_thin replacement",
         nodenames = {"vacuum:vacuum"},
         neighbors = {"vacuum:atmos_thin"},
-        interval = 3,
+        interval = 4,
         chance = 2, -- higher chance of thin appears
         max_y = height.end_height,
         min_y = height.start_height,
@@ -63,7 +63,7 @@ function register_physics_propagation(height)
             end
 
             if (vacuum.is_pos_in_space(pos)) then
-                if vacuum.near_powered_airpump(pos, 4) and vacuum.has_in_area(pos, "vacuum:atmos_thin", 2, 60) then
+                if vacuum.near_powered_airpump(pos, 5) and vacuum.has_in_area(pos, "vacuum:atmos_thin", 2, 60) then
                     minetest.set_node(pos, {
                         name = "vacuum:atmos_thin"
                     })
@@ -106,14 +106,16 @@ function register_physics_propagation(height)
             elseif not vacuum.near_powered_airpump(pos, 4) then
                 local pos1, pos2, area, areaNodes = vacuum.get_area_nodes(pos, 1);
 
-                if vacuum.has_in_area_data(pos1, pos2, area, areaNodes, "vacuum:vacuum", 3) then
+                if vacuum.has_in_area_data(pos1, pos2, area, areaNodes, "vacuum:vacuum", 2) then
                     minetest.set_node(pos, {
                         name = "vacuum:atmos_thin"
                     })
-                elseif vacuum.has_in_area_data(pos1, pos2, area, areaNodes, "vacuum:atmos_thin", 10) then
+                elseif vacuum.has_in_area_data(pos1, pos2, area, areaNodes, "vacuum:atmos_thin", 7) then
                     minetest.set_node(pos, {
                         name = "vacuum:atmos_thin"
                     })
+                else
+
                 end
             end
         end)
@@ -125,7 +127,7 @@ function register_physics_propagation(height)
         nodenames = {"vacuum:atmos_thick"},
         neighbors = {"vacuum:vacuum"},
         interval = 3,
-        chance = 1, -- 3 ???
+        chance = 3, -- 3 ???
         max_y = height.end_height,
         min_y = height.start_height,
         action = vacuum.throttle(5000, function(pos, node)
@@ -169,6 +171,7 @@ function register_physics_propagation(height)
             end
 
             if vacuum.is_pos_in_space(pos) then
+                local spawn_particles = false;
                 local pos1, pos2, area, areaNodes = vacuum.get_area_nodes(pos, 1);
 
                 if vacuum.near_powered_airpump(pos, 5) then -- 12
@@ -176,37 +179,42 @@ function register_physics_propagation(height)
                         minetest.set_node(pos, {
                             name = "vacuum:atmos_thick"
                         })
+                        spawn_particles = true;
                     elseif vacuum.has_in_area_data(pos1, pos2, area, areaNodes, "vacuum:atmos_thin", 1) and
                         not vacuum.has_in_area_data(pos1, pos2, area, areaNodes, "vacuum:vacuum", 3) then
                         minetest.set_node(pos, {
                             name = "vacuum:atmos_thick"
                         })
+                        spawn_particles = true;
                     end
                 end
 
-                --[[
-                if vacuum.near_powered_airpump(pos, 5) then -- 12
-                    if vacuum.has_in_area(pos, "vacuum:atmos_thick", 1, 5) then
-                        minetest.set_node(pos, {
-                            name = "vacuum:atmos_thick"
-                        })
-                    elseif vacuum.has_in_area(pos, "vacuum:atmos_thin", 1, 1) and
-                        not vacuum.has_in_area(pos, "vacuum:vacuum", 1, 3) then
-                        minetest.set_node(pos, {
-                            name = "vacuum:atmos_thick"
-                        })
-                    end
+                if vacuum.has_in_area_data(pos1, pos2, area, areaNodes, "vacuum:atmos_thick", 11) then
+                    minetest.set_node(pos, {
+                        name = "vacuum:atmos_thick"
+                    })
+                    spawn_particles = true;
                 end
-                --]]
+
                 if node.name == "air" or node.name == "technic:dummy_light_source" then
                     minetest.set_node(pos, {
                         name = "vacuum:atmos_thick"
                     })
+                    spawn_particles = true;
+                end
+
+                if spawn_particles then
+                    if math.random(0, 2) == 0 then
+                        vacuum.spawn_particle(pos, math.random(-0.001, 0.001), math.random(-0.001, 0.001),
+                            math.random(-0.001, 0.001), math.random(-0.002, 0.002), math.random(-0.007, 0.007),
+                            math.random(-0.002, 0.002), math.random(3.2, 4.8), 10)
+                    end
                 end
             end
         end)
     })
 
+    -- this makes vacuum!
     -- thin atmos to vacuum
     minetest.register_abm({
         label = "thin atmos -> vacuum replacement",
@@ -229,20 +237,32 @@ function register_physics_propagation(height)
             if vacuum.is_pos_in_space(pos) then
                 local pos1, pos2, area, areaNodes = vacuum.get_area_nodes(pos, 1);
 
+                local spawn_particles = false;
                 if not vacuum.near_powered_airpump(pos, 5) and
                     vacuum.has_in_area_data(pos1, pos2, area, areaNodes, "vacuum:vacuum", 3) then
                     minetest.set_node(pos, {
                         name = "vacuum:vacuum"
                     })
+                    spawn_particles = true;
                 elseif not vacuum.near_powered_airpump(pos, 4) and
                     vacuum.has_in_area_data(pos1, pos2, area, areaNodes, "vacuum:vacuum", 10) then
                     minetest.set_node(pos, {
                         name = "vacuum:vacuum"
                     })
-                    --[[elseif vacuum.has_in_area(pos, "vacuum:vacuum", 1, 25) then
+                    spawn_particles = true;
+                elseif vacuum.has_in_area(pos, "vacuum:vacuum", 1, 25) then
                     minetest.set_node(pos, {
                         name = "vacuum:vacuum"
-                    })--]]
+                    })
+                    spawn_particles = true;
+                end
+
+                if spawn_particles then
+                    if math.random(0, 2) == 0 then
+                        vacuum.spawn_particle(pos, math.random(-0.001, 0.001), math.random(-0.001, 0.001),
+                            math.random(-0.001, 0.001), math.random(-0.002, 0.002), math.random(-0.007, 0.007),
+                            math.random(-0.002, 0.002), math.random(3.2, 4.8), 8)
+                    end
                 end
             end
         end)
