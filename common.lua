@@ -24,6 +24,24 @@ vacuum.is_pos_in_space = function(pos)
     return check_pos_in_space(pos)
 end
 
+-- ground pos checker
+local check_pos_on_ground = function(pos)
+    for _, p in pairs(vacuum.air_heights) do
+        if p.enabled then
+            local min = p.start_height
+            local max = p.end_height
+            if pos.y >= min and pos.y < max then
+                return true
+            end
+        end
+    end
+    return false
+end
+
+vacuum.is_pos_on_ground = function(pos)
+    return check_pos_on_ground(pos)
+end
+
 local check_pos_in_spawn = function(pos)
     local spawn_spoint = minetest.setting_get_pos("static_spawnpoint") or {
         x = 0,

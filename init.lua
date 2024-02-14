@@ -22,6 +22,13 @@ vacuum = {
             start_height = tonumber(minetest.settings:get("vacuum.vac_heights.void.start_height")) or -31000
         }
     },
+    air_heights = {
+        planet = {
+            enabled = true,
+            end_height = tonumber(minetest.settings:get("vacuum.vac_heights.planet.end_height")) or 1000,
+            start_height = tonumber(minetest.settings:get("vacuum.vac_heights.planet.start_height")) or -11000
+        }
+    },
     air_pump_range = tonumber(minetest.settings:get("vacuum.air_pump_range")) or 5,
     profile_mapgen = minetest.settings:get("vacuum.profile_mapgen"),
     flush_bottle_usage = 99,
@@ -53,8 +60,10 @@ end
 if not vacuum.disable_physics then
     dofile(MP .. "/physics_drop.lua")
     dofile(MP .. "/physics_leakage.lua")
+    dofile(MP .. "/physics_leakage2.lua")
     dofile(MP .. "/physics_plants.lua")
     dofile(MP .. "/physics_propagation.lua")
+    dofile(MP .. "/physics_propagation2.lua")
     dofile(MP .. "/physics_soil.lua")
     dofile(MP .. "/physics_sublimation.lua")
 
@@ -69,6 +78,19 @@ if not vacuum.disable_physics then
             minetest.log("action",
                 "[vacuum] " .. "Registered Vacuum ABM on nodes at " .. height.start_height .. " to " ..
                     height.end_height)
+        end
+    end
+
+    for i, height in pairs(vacuum.air_heights) do
+        if height.enabled then
+            register_physics_drop(height)
+            register_physics_leakage2(height)
+            register_physics_plants(height)
+            register_physics_propagation2(height)
+            register_physics_soil(height)
+            register_physics_sublimation(height)
+            minetest.log("action", "[vacuum] " .. "Registered Air ABM on nodes at " .. height.start_height .. " to " ..
+                height.end_height)
         end
     end
 end
