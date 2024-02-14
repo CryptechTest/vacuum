@@ -16,9 +16,11 @@ function register_physics_soil(height)
             if vacuum.is_pos_in_spawn(pos) then
                 return
             end
-            minetest.set_node(pos, {
-                name = "default:gravel"
-            })
+            if vacuum.near_vacuum(pos, 1, 5) then
+                minetest.set_node(pos, {
+                    name = "default:gravel"
+                })
+            end
         end)
     })
 

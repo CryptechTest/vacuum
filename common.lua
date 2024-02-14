@@ -122,18 +122,19 @@ function vacuum.near_atmos(pos, c)
     return count >= c
 end
 
-function vacuum.near_air(pos, c)
+function vacuum.near_air(pos, dist, c)
     local pos1 = vector.subtract(pos, {
-        x = 1,
-        y = 1,
-        z = 1
+        x = dist,
+        y = dist,
+        z = dist
     })
     local pos2 = vector.add(pos, {
-        x = 1,
-        y = 1,
-        z = 1
+        x = dist,
+        y = dist,
+        z = dist
     })
 
+    local count = 0
     local nodes = minetest.find_nodes_in_area(pos1, pos2, {"vacuum:atmos_thick"})
     for _, node in ipairs(nodes) do
         count = count + 1
@@ -142,18 +143,19 @@ function vacuum.near_air(pos, c)
     return count >= c
 end
 
-function vacuum.near_vacuum(pos, dist)
+function vacuum.near_vacuum(pos, dist, c)
     local pos1 = vector.subtract(pos, {
-        x = 1,
-        y = 1,
-        z = 1
+        x = dist,
+        y = dist,
+        z = dist
     })
     local pos2 = vector.add(pos, {
-        x = 1,
-        y = 1,
-        z = 1
+        x = dist,
+        y = dist,
+        z = dist
     })
 
+    local count = 0
     local nodes = minetest.find_nodes_in_area(pos1, pos2, {"group:vacuum"})
     for _, node in ipairs(nodes) do
         count = count + 1
@@ -317,7 +319,7 @@ function vacuum.spawn_particle(pos, dir_x, dir_y, dir_z, acl_x, acl_y, acl_z, lv
         texture = "vacuum_air_particle_1.png^[transformR90]"
     end
     if (math.random() > 0.5) then
-        texture = texture .. "^[colorize:#4aebf7:21"
+        texture = texture .. "^[colorize:#4aebf7:10"
     end
     local prt = {
         texture = texture,

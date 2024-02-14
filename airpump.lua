@@ -105,7 +105,7 @@ local run = function(pos, node)
         if meta:get_int("src_time") < round(time * 10) then
             if not powered then
                 technic.swap_node(pos, machine_node)
-                meta:set_string("infotext", machine_desc_tier .. S("%s Unpowered"))
+                meta:set_string("infotext", machine_desc_tier .. S(" Unpowered"))
             end
             return
         end
