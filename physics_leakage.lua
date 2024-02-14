@@ -41,56 +41,51 @@ function register_physics_leakage(height)
                 return
             end
 
-            if not vacuum.is_pos_in_space(pos) then -- or vacuum.near_powered_airpump(pos) then
-                -- on earth: TODO: replace vacuum with air
+            -- local node = minetest.get_node(pos)
+
+            if node.name == "pipeworks:entry_panel_empty" or node.name == "pipeworks:entry_panel_loaded" then
+                -- air thight pipes
                 return
-            else
-                -- local node = minetest.get_node(pos)
+            end
 
-                if node.name == "pipeworks:entry_panel_empty" or node.name == "pipeworks:entry_panel_loaded" then
-                    -- air thight pipes
-                    return
+            if node.name == "vacuum:airpump" or node.name == "vacuum:airpump_wait" or node.name ==
+                "vacuum:airpump_active" then
+                -- pump is airtight
+                return
+            end
+
+            -- in space: replace air with vacuum
+            local surrounding_node = minetest.find_node_near(pos, 1, {"vacuum:atmos_thick"})
+
+            if surrounding_node ~= nil then
+                if vacuum.debug then
+                    -- debug mode, set
+                    minetest.set_node(surrounding_node, {
+                        name = "default:cobble"
+                    })
+                else
+                    -- normal case
+                    -- minetest.set_node(surrounding_node, {name = "vacuum:atmos_thin"})
+                    minetest.set_node(surrounding_node, {
+                        name = "vacuum:vacuum"
+                    })
                 end
+            end
 
-                if node.name == "vacuum:airpump" or node.name == "vacuum:airpump_wait" or node.name ==
-                    "vacuum:airpump_active" then
-                    -- pump is airtight
-                    return
-                end
+            local surrounding_atmos = minetest.find_node_near(pos, 1, {"vacuum:atmos_thin"})
 
-                -- in space: replace air with vacuum
-                local surrounding_node = minetest.find_node_near(pos, 1, {"vacuum:atmos_thick"})
-
-                if surrounding_node ~= nil then
-                    if vacuum.debug then
-                        -- debug mode, set
-                        minetest.set_node(surrounding_node, {
-                            name = "default:cobble"
-                        })
-                    else
-                        -- normal case
-                        -- minetest.set_node(surrounding_node, {name = "vacuum:atmos_thin"})
-                        minetest.set_node(surrounding_node, {
-                            name = "vacuum:vacuum"
-                        })
-                    end
-                end
-
-                local surrounding_atmos = minetest.find_node_near(pos, 1, {"vacuum:atmos_thin"})
-
-                if surrounding_atmos ~= nil then
-                    if vacuum.debug then
-                        -- debug mode, set
-                        minetest.set_node(surrounding_atmos, {
-                            name = "default:cobble"
-                        })
-                    else
-                        -- normal case
-                        -- minetest.set_node(surrounding_node, {name = "vacuum:atmos_thin"})
-                        minetest.set_node(surrounding_atmos, {
-                            name = "vacuum:vacuum"
-                        })
-                    end
+            if surrounding_atmos ~= nil then
+                if vacuum.debug then
+                    -- debug mode, set
+                    minetest.set_node(surrounding_atmos, {
+                        name = "default:cobble"
+                    })
+                else
+                    -- normal case
+                    -- minetest.set_node(surrounding_node, {name = "vacuum:atmos_thin"})
+                    minetest.set_node(surrounding_atmos, {
+                        name = "vacuum:vacuum"
+                    })
                 end
             end
         end)
@@ -188,43 +183,38 @@ function register_physics_leakage(height)
                 return
             end
 
-            if not vacuum.is_pos_in_space(pos) then -- or vacuum.near_powered_airpump(pos) then
-                -- on earth: TODO: replace vacuum with air
-                return
-            else
-                -- local node = minetest.get_node(pos)
+            -- local node = minetest.get_node(pos)
 
-                local door = minetest.get_item_group(node.name, "door")
+            local door = minetest.get_item_group(node.name, "door")
 
-                -- in space: replace air with atmos_thin
-                local surrounding_vac = minetest.find_node_near(pos, 1, {"vacuum:vacuum"})
-                local surrounding_atmos = minetest.find_node_near(pos, 1, {"vacuum:atmos_thick"})
+            -- in space: replace air with atmos_thin
+            local surrounding_vac = minetest.find_node_near(pos, 1, {"vacuum:vacuum"})
+            local surrounding_atmos = minetest.find_node_near(pos, 1, {"vacuum:atmos_thick"})
 
-                if surrounding_vac ~= nil and surrounding_atmos ~= nil then
-                    if vacuum.debug then
-                        -- debug mode, set
-                        minetest.set_node(surrounding_vac, {
-                            name = "default:cobble"
-                        })
-                    else
-                        -- normal case
-                        -- minetest.set_node(surrounding_node, {name = "vacuum:atmos_thin"})
-                        minetest.set_node(surrounding_vac, {
-                            name = "vacuum:atmos_thin"
-                        })
-                    end
-                end
-
-                -- if door is open
-                if surrounding_vac ~= nil and surrounding_atmos == nil and door == 2 then
-                    minetest.set_node(surrounding_atmos, {
-                        name = "vacuum:vacuum"
+            if surrounding_vac ~= nil and surrounding_atmos ~= nil then
+                if vacuum.debug then
+                    -- debug mode, set
+                    minetest.set_node(surrounding_vac, {
+                        name = "default:cobble"
                     })
-                elseif surrounding_vac ~= nil and surrounding_vac ~= nil and door == 2 then
-                    minetest.set_node(surrounding_atmos, {
+                else
+                    -- normal case
+                    -- minetest.set_node(surrounding_node, {name = "vacuum:atmos_thin"})
+                    minetest.set_node(surrounding_vac, {
                         name = "vacuum:atmos_thin"
                     })
                 end
+            end
+
+            -- if door is open
+            if surrounding_vac ~= nil and surrounding_atmos == nil and door == 2 then
+                minetest.set_node(surrounding_atmos, {
+                    name = "vacuum:vacuum"
+                })
+            elseif surrounding_vac ~= nil and surrounding_vac ~= nil and door == 2 then
+                minetest.set_node(surrounding_atmos, {
+                    name = "vacuum:atmos_thin"
+                })
             end
         end)
     })
