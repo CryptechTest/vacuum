@@ -340,7 +340,10 @@ function vacuum.spawn_particle(pos, dir_x, dir_y, dir_z, acl_x, acl_y, acl_z, lv
         texture = texture .. "^[colorize:#4aebf7:10"
     end
     local prt = {
-        texture = texture,
+        texture = {
+            name = texture,
+            fade = "out"
+        },
         vel = 1,
         time = time or 6,
         size = 3 + (lvl or 1),
