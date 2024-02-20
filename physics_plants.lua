@@ -32,11 +32,11 @@ function register_physics_plants(height)
         nodenames = {"group:sapling", "group:plant", "group:flora", "group:flower", "group:leafdecay",
                      "ethereal:banana", "ethereal:orange", "ethereal:strawberry"},
         neighbors = {"vacuum:vacuum", "asteroid:atmos"},
-        interval = 3,
-        chance = 2,
+        interval = 2,
+        chance = 3,
         max_y = height.end_height,
         min_y = height.start_height,
-        action = vacuum.throttle(100, function(pos)
+        action = vacuum.throttle(1000, function(pos)
             if vacuum.is_pos_in_spawn(pos) then
                 return
             end
@@ -51,15 +51,15 @@ function register_physics_plants(height)
         label = "space vacuum plants",
         nodenames = {"group:leaves"},
         neighbors = {"vacuum:vacuum", "asteroid:atmos"},
-        interval = 5,
+        interval = 2,
         chance = 3,
         max_y = height.end_height,
         min_y = height.start_height,
-        action = vacuum.throttle(200, function(pos)
+        action = vacuum.throttle(2000, function(pos)
             if vacuum.is_pos_in_spawn(pos) then
                 return
             end
-            if vacuum.near_vacuum(pos, 1, 5) then
+            if vacuum.near_vacuum(pos, 1, 4) then
                 minetest.set_node(pos, {
                     name = "vacuum:dead_leaves"
                 })

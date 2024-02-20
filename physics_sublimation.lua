@@ -9,7 +9,7 @@ function register_physics_sublimation(height)
         chance = 2, -- 1
         max_y = height.end_height,
         min_y = height.start_height,
-        action = vacuum.throttle(500, function(pos, node)
+        action = vacuum.throttle(2500, function(pos, node)
             if not vacuum.is_pos_in_space(pos) then
                 return
             end
@@ -30,13 +30,13 @@ function register_physics_sublimation(height)
     -- sublimate nodes in vacuum
     minetest.register_abm({
         label = "space vacuum sublimate",
-        nodenames = {"group:leaves", "group:water"},
+        nodenames = {"group:water"},
         neighbors = {"vacuum:vacuum"},
         interval = 3,
         chance = 1,
         max_y = height.end_height,
         min_y = height.start_height,
-        action = vacuum.throttle(750, function(pos, node)
+        action = vacuum.throttle(1750, function(pos, node)
             if not vacuum.is_pos_in_space(pos) then
                 return
             end

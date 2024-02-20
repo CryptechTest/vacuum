@@ -9,7 +9,7 @@ if has_monitoring then
 end
 
 -- air leaking nodes
-local leaky_nodes = {"group:pipe", "group:tube"}
+local leaky_nodes = {"group:pipe", "group:tube", "group:fence", "group:leaky"}
 
 if has_mesecons_random then
     table.insert(leaky_nodes, "mesecons_random:ghoststone_active")

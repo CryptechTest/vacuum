@@ -19,7 +19,7 @@ function register_physics_propagation(height)
         chance = 1, -- this need to be 1..
         max_y = height.end_height,
         min_y = height.start_height,
-        action = vacuum.throttle(5000, function(pos, node)
+        action = vacuum.throttle(2500, function(pos, node)
             -- update metrics
             if metric_space_vacuum_abm ~= nil then
                 metric_space_vacuum_abm.inc()
@@ -52,7 +52,7 @@ function register_physics_propagation(height)
         chance = 2, -- higher chance of thin appears
         max_y = height.end_height,
         min_y = height.start_height,
-        action = vacuum.throttle(5000, function(pos, node)
+        action = vacuum.throttle(2500, function(pos, node)
             -- update metrics 
             if metric_space_vacuum_abm ~= nil then
                 metric_space_vacuum_abm.inc()
@@ -87,7 +87,7 @@ function register_physics_propagation(height)
         chance = 1,
         max_y = height.end_height,
         min_y = height.start_height,
-        action = vacuum.throttle(5000, function(pos, node)
+        action = vacuum.throttle(2500, function(pos, node)
             -- update metrics
             if metric_space_vacuum_abm ~= nil then
                 metric_space_vacuum_abm.inc()
@@ -97,13 +97,7 @@ function register_physics_propagation(height)
                 return
             end
 
-            if not vacuum.is_pos_in_space(pos) then
-                -- on earth
-                minetest.set_node(pos, {
-                    name = "air"
-                })
-                -- not near a powered airpump
-            elseif not vacuum.near_powered_airpump(pos, 4) then
+            if not vacuum.near_powered_airpump(pos, 4) then
                 local pos1, pos2, area, areaNodes = vacuum.get_area_nodes(pos, 1);
 
                 if vacuum.has_in_area_data(pos1, pos2, area, areaNodes, "vacuum:vacuum", 2) then
@@ -126,11 +120,11 @@ function register_physics_propagation(height)
         label = "vacuum -> thin atmos replacement",
         nodenames = {"vacuum:atmos_thick"},
         neighbors = {"vacuum:vacuum"},
-        interval = 3,
-        chance = 3, -- 3 ???
+        interval = 2,
+        chance = 2, -- 3 ???
         max_y = height.end_height,
         min_y = height.start_height,
-        action = vacuum.throttle(5000, function(pos, node)
+        action = vacuum.throttle(2500, function(pos, node)
             -- update metrics
             if metric_space_vacuum_abm ~= nil then
                 metric_space_vacuum_abm.inc()
@@ -160,7 +154,7 @@ function register_physics_propagation(height)
         chance = 1,
         max_y = height.end_height,
         min_y = height.start_height,
-        action = vacuum.throttle(5000, function(pos, node)
+        action = vacuum.throttle(2500, function(pos, node)
             -- update metrics
             if metric_space_vacuum_abm ~= nil then
                 metric_space_vacuum_abm.inc()
@@ -224,7 +218,7 @@ function register_physics_propagation(height)
         chance = 1,
         max_y = height.end_height,
         min_y = height.start_height,
-        action = vacuum.throttle(5000, function(pos, node)
+        action = vacuum.throttle(2500, function(pos, node)
             -- update metrics
             if metric_space_vacuum_abm ~= nil then
                 metric_space_vacuum_abm.inc()
@@ -279,7 +273,7 @@ function register_physics_propagation(height)
         chance = 1,
         max_y = height.end_height,
         min_y = height.start_height,
-        action = vacuum.throttle(5000, function(pos, node)
+        action = vacuum.throttle(2500, function(pos, node)
             -- update metrics
             if metric_space_vacuum_abm ~= nil then
                 metric_space_vacuum_abm.inc()

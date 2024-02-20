@@ -19,7 +19,7 @@ function register_physics_propagation2(height)
         chance = 2,
         max_y = height.end_height,
         min_y = height.start_height,
-        action = vacuum.throttle(5000, function(pos, node)
+        action = vacuum.throttle(2500, function(pos, node)
             -- update metrics
             if metric_space_vacuum_abm ~= nil then
                 metric_space_vacuum_abm.inc()
@@ -52,7 +52,7 @@ function register_physics_propagation2(height)
         chance = 2, -- higher chance of thin appears
         max_y = height.end_height,
         min_y = height.start_height,
-        action = vacuum.throttle(5000, function(pos, node)
+        action = vacuum.throttle(2500, function(pos, node)
             -- update metrics 
             if metric_space_vacuum_abm ~= nil then
                 metric_space_vacuum_abm.inc()
@@ -83,7 +83,7 @@ function register_physics_propagation2(height)
         chance = 2,
         max_y = height.end_height,
         min_y = height.start_height,
-        action = vacuum.throttle(5000, function(pos, node)
+        action = vacuum.throttle(2500, function(pos, node)
             -- update metrics
             if metric_space_vacuum_abm ~= nil then
                 metric_space_vacuum_abm.inc()
@@ -106,7 +106,7 @@ function register_physics_propagation2(height)
         chance = 3,
         max_y = height.end_height,
         min_y = height.start_height,
-        action = vacuum.throttle(5000, function(pos, node)
+        action = vacuum.throttle(2500, function(pos, node)
             -- update metrics
             if metric_space_vacuum_abm ~= nil then
                 metric_space_vacuum_abm.inc()
@@ -129,7 +129,7 @@ function register_physics_propagation2(height)
         chance = 2,
         max_y = height.end_height,
         min_y = height.start_height,
-        action = vacuum.throttle(5000, function(pos, node)
+        action = vacuum.throttle(2500, function(pos, node)
             -- update metrics
             if metric_space_vacuum_abm ~= nil then
                 metric_space_vacuum_abm.inc()
@@ -155,7 +155,7 @@ function register_physics_propagation2(height)
         chance = 1,
         max_y = height.end_height,
         min_y = height.start_height,
-        action = vacuum.throttle(5000, function(pos, node)
+        action = vacuum.throttle(2500, function(pos, node)
             -- update metrics
             if metric_space_vacuum_abm ~= nil then
                 metric_space_vacuum_abm.inc()
@@ -209,7 +209,7 @@ function register_physics_propagation2(height)
         chance = 1,
         max_y = height.end_height,
         min_y = height.start_height,
-        action = vacuum.throttle(5000, function(pos, node)
+        action = vacuum.throttle(2500, function(pos, node)
             -- update metrics
             if metric_space_vacuum_abm ~= nil then
                 metric_space_vacuum_abm.inc()

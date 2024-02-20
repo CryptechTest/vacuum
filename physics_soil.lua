@@ -8,15 +8,15 @@ function register_physics_soil(height)
                      "default:dirt_with_coniferous_litter", "default:dry_dirt", "default:dry_dirt_with_dry_grass",
                      "woodsoils:dirt_with_leaves_1", "woodsoils:dirt_with_leaves_2"},
         neighbors = {"vacuum:vacuum"},
-        interval = 2,
+        interval = 3,
         chance = 1,
         max_y = height.end_height,
         min_y = height.start_height,
-        action = vacuum.throttle(1000, function(pos)
+        action = vacuum.throttle(2500, function(pos)
             if vacuum.is_pos_in_spawn(pos) then
                 return
             end
-            if vacuum.near_vacuum(pos, 1, 5) then
+            if vacuum.near_vacuum(pos, 1, 4) then
                 minetest.set_node(pos, {
                     name = "default:gravel"
                 })

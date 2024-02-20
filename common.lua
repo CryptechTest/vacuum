@@ -346,7 +346,7 @@ function vacuum.spawn_particle(pos, dir_x, dir_y, dir_z, acl_x, acl_y, acl_z, lv
         },
         vel = 1,
         time = time or 6,
-        size = 3 + (lvl or 1),
+        size = 2 + (lvl or 1),
         glow = 3,
         cols = true
     }

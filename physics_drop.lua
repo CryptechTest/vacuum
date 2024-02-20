@@ -1,7 +1,7 @@
 -- weird behaving nodes in vacuum
 local drop_nodes = {"default:torch", "default:torch_wall", "default:torch_ceiling", "default:ladder_wood",
-                    "default:ladder_steel", "default:dry_shrub", "default:papyrus", "default:cactus", "group:wool",
-                    "group:pillow", "group:wood", "group:tree"}
+                    "default:dry_shrub", "default:papyrus", "default:cactus", "group:wool", "group:pillow",
+                    "group:wood", "group:tree"}
 
 local function get_node_drops(node)
     if node.name == "default:papyrus" then
