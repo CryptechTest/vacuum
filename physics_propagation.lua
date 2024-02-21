@@ -15,7 +15,7 @@ function register_physics_propagation(height)
         label = "vacuum -> thin atmos replacement",
         nodenames = {"vacuum:vacuum"},
         neighbors = {"air"},
-        interval = 1,
+        interval = 5,
         chance = 1, -- this need to be 1..
         max_y = height.end_height,
         min_y = height.start_height,
@@ -48,8 +48,8 @@ function register_physics_propagation(height)
         label = "vacuum -> atmos_thin replacement",
         nodenames = {"vacuum:vacuum"},
         neighbors = {"vacuum:atmos_thin"},
-        interval = 4,
-        chance = 2, -- higher chance of thin appears
+        interval = 2,
+        chance = 1, -- higher chance of thin appears
         max_y = height.end_height,
         min_y = height.start_height,
         action = vacuum.throttle(2500, function(pos, node)
@@ -83,7 +83,7 @@ function register_physics_propagation(height)
         label = "thick atmos -> thin replacement",
         nodenames = {"air"},
         neighbors = {"vacuum:atmos_thin"},
-        interval = 3,
+        interval = 5,
         chance = 1,
         max_y = height.end_height,
         min_y = height.start_height,
@@ -150,7 +150,7 @@ function register_physics_propagation(height)
         label = "aer -> thick atmos replacement",
         nodenames = {"vacuum:atmos_thin", "vacuum:atmos_thick"},  -- , "technic:dummy_light_source"
         neighbors = {"air"},
-        interval = 3,
+        interval = 4,
         chance = 1,
         max_y = height.end_height,
         min_y = height.start_height,
@@ -214,7 +214,7 @@ function register_physics_propagation(height)
         label = "thin atmos -> vacuum replacement",
         nodenames = {"vacuum:atmos_thin", "vacuum:atmos_thick", "air"},
         neighbors = {"vacuum:vacuum"},
-        interval = 2,
+        interval = 10,
         chance = 1,
         max_y = height.end_height,
         min_y = height.start_height,
