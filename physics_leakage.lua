@@ -65,10 +65,12 @@ function register_physics_leakage(height)
                     })
                 else
                     -- normal case
-                    -- minetest.set_node(surrounding_node, {name = "vacuum:atmos_thin"})
                     minetest.set_node(surrounding_node, {
-                        name = "vacuum:vacuum"
+                        name = "vacuum:atmos_thin"
                     })
+                    --[[minetest.set_node(surrounding_node, {
+                        name = "vacuum:vacuum"
+                    })]] --
                 end
             end
 
