@@ -183,7 +183,7 @@ minetest.register_abm({
                     if node ~= nil then
                         if (vacuum.has_in_area(pos, "vacuum:atmos_thin", 1, 7)) then
                             minetest.set_node(node, {
-                                name = "vacuum:atmos_thick"
+                                name = "air"
                             })
                         end
                     end
@@ -197,7 +197,7 @@ minetest.register_abm({
                             minetest.set_node(node, {
                                 name = "vacuum:atmos_thin"
                             })
-                            -- vacuum.replace_nodes_at(pos, j, node.name, "vacuum:atmos_thick")
+                            -- vacuum.replace_nodes_at(pos, j, node.name, "air")
                         end
 
                         -- flush_area(node)
@@ -211,8 +211,8 @@ minetest.register_abm({
                         end
                         -- if (vacuum.has_in_area(pos, "vacuum:atmos_thin", 2, 3)) then
                         --	if (node.name == "vacuum:atmos_thin") then
-                        --		minetest.set_node(node, {name = "vacuum:atmos_thick"})
-                        --		vacuum.replace_nodes_at(pos, 2, node.name, "vacuum:atmos_thick")
+                        --		minetest.set_node(node, {name = "air"})
+                        --		vacuum.replace_nodes_at(pos, 2, node.name, "air")
                         --	else
                         --		minetest.set_node(node, {name = "vacuum:atmos_thin"})
                         --		vacuum.replace_nodes_at(pos, 2, node.name, "vacuum:atmos_thin")

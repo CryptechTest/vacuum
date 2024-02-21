@@ -14,7 +14,7 @@ function register_physics_propagation(height)
     minetest.register_abm({
         label = "vacuum -> thin atmos replacement",
         nodenames = {"vacuum:vacuum"},
-        neighbors = {"vacuum:atmos_thick"},
+        neighbors = {"air"},
         interval = 1,
         chance = 1, -- this need to be 1..
         max_y = height.end_height,
@@ -34,7 +34,7 @@ function register_physics_propagation(height)
                     minetest.set_node(pos, {
                         name = "vacuum:atmos_thin"
                     })
-                elseif vacuum.has_in_area(pos, "vacuum:atmos_thick", 1, 4) then
+                elseif vacuum.has_in_area(pos, "air", 1, 4) then
                     minetest.set_node(pos, {
                         name = "vacuum:atmos_thin"
                     })
@@ -81,7 +81,7 @@ function register_physics_propagation(height)
     -- thin atmos propagation
     minetest.register_abm({
         label = "thick atmos -> thin replacement",
-        nodenames = {"vacuum:atmos_thick"},
+        nodenames = {"air"},
         neighbors = {"vacuum:atmos_thin"},
         interval = 3,
         chance = 1,
@@ -118,7 +118,7 @@ function register_physics_propagation(height)
     -- thin atmos propagation
     minetest.register_abm({
         label = "vacuum -> thin atmos replacement",
-        nodenames = {"vacuum:atmos_thick"},
+        nodenames = {"air"},
         neighbors = {"vacuum:vacuum"},
         interval = 2,
         chance = 2, -- 3 ???
@@ -148,8 +148,8 @@ function register_physics_propagation(height)
     minetest.register_abm({
         -- replace air and thin with thick..
         label = "aer -> thick atmos replacement",
-        nodenames = {"vacuum:atmos_thin", "air", "technic:dummy_light_source"},
-        neighbors = {"vacuum:atmos_thick"},
+        nodenames = {"vacuum:atmos_thin", "vacuum:atmos_thick"},  -- , "technic:dummy_light_source"
+        neighbors = {"air"},
         interval = 3,
         chance = 1,
         max_y = height.end_height,
@@ -169,30 +169,30 @@ function register_physics_propagation(height)
                 local pos1, pos2, area, areaNodes = vacuum.get_area_nodes(pos, 1);
 
                 if vacuum.near_powered_airpump(pos, 5) then -- 12
-                    if vacuum.has_in_area_data(pos1, pos2, area, areaNodes, "vacuum:atmos_thick", 5) then
+                    if vacuum.has_in_area_data(pos1, pos2, area, areaNodes, "air", 5) then
                         minetest.set_node(pos, {
-                            name = "vacuum:atmos_thick"
+                            name = "air"
                         })
                         spawn_particles = true;
                     elseif vacuum.has_in_area_data(pos1, pos2, area, areaNodes, "vacuum:atmos_thin", 1) and
                         not vacuum.has_in_area_data(pos1, pos2, area, areaNodes, "vacuum:vacuum", 3) then
                         minetest.set_node(pos, {
-                            name = "vacuum:atmos_thick"
+                            name = "air"
                         })
                         spawn_particles = true;
                     end
                 end
 
-                if vacuum.has_in_area_data(pos1, pos2, area, areaNodes, "vacuum:atmos_thick", 11) then
+                if vacuum.has_in_area_data(pos1, pos2, area, areaNodes, "air", 11) then
                     minetest.set_node(pos, {
-                        name = "vacuum:atmos_thick"
+                        name = "air"
                     })
                     spawn_particles = true;
                 end
 
-                if node.name == "air" or node.name == "technic:dummy_light_source" then
+                if node.name == "vacuum:atmos_thick" then -- or node.name == "technic:dummy_light_source"
                     minetest.set_node(pos, {
-                        name = "vacuum:atmos_thick"
+                        name = "air"
                     })
                     spawn_particles = true;
                 end
@@ -212,7 +212,7 @@ function register_physics_propagation(height)
     -- thin atmos to vacuum
     minetest.register_abm({
         label = "thin atmos -> vacuum replacement",
-        nodenames = {"vacuum:atmos_thin", "air"},
+        nodenames = {"vacuum:atmos_thin", "vacuum:atmos_thick", "air"},
         neighbors = {"vacuum:vacuum"},
         interval = 2,
         chance = 1,
@@ -285,7 +285,7 @@ function register_physics_propagation(height)
 
             if vacuum.near_powered_airpump(pos, 4) and vacuum.has_in_area(pos, "vacuum:atmos_thin", 1, 5) then
                 minetest.set_node(pos, {
-                    name = "vacuum:atmos_thick"
+                    name = "air"
                 })
             elseif vacuum.near_powered_airpump(pos, 2) then
                 minetest.set_node(pos, {

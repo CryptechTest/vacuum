@@ -2,6 +2,7 @@
 -- this is vacuum of space
 minetest.register_node("vacuum:vacuum", {
 	description = "Vacuum",
+	sunlight_propagates = true,
 	walkable = false,
 	pointable = false,
 	diggable = false,
@@ -21,7 +22,6 @@ minetest.register_node("vacuum:vacuum", {
 	groups = {not_in_creative_inventory=1, not_blocking_trains=1, cools_lava=1, vacuum = 1},
 	paramtype = "light",
 	drop = {},
-	sunlight_propagates = true
 })
 
 -- this is the border between air and vacuum..
@@ -42,6 +42,7 @@ minetest.register_node("vacuum:atmos_thin", {
 	--post_effect_color = {a = 8, r = 55, g = 52, b = 88},
 	post_effect_color = {a = 8, r = 20, g = 50, b = 200},
 	groups = {not_in_creative_inventory = 1, atmosphere = 1},
+	drowning = 1,
 	waving = 3
 })
 

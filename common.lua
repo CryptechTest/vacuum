@@ -110,7 +110,7 @@ function vacuum.near_aeri(pos, c)
 
     local count = 0;
     -- local nodes = minetest.find_nodes_in_area(pos1, pos2, {"group:atmosphere"})
-    local nodes = minetest.find_nodes_in_area(pos1, pos2, {"vacuum:atmos_thick"})
+    local nodes = minetest.find_nodes_in_area(pos1, pos2, {"vacuum:atmos_thick", "air"})
     for _, node in ipairs(nodes) do
         count = count + 1
     end
@@ -131,7 +131,7 @@ function vacuum.near_atmos(pos, c)
     })
 
     local count = 0;
-    local nodes = minetest.find_nodes_in_area(pos1, pos2, {"group:atmosphere"})
+    local nodes = minetest.find_nodes_in_area(pos1, pos2, {"group:atmosphere", "air"})
     -- local nodes = minetest.find_nodes_in_area(pos1, pos2, {"vacuum:atmos_thick"})
     for _, node in ipairs(nodes) do
         count = count + 1
@@ -153,7 +153,7 @@ function vacuum.near_air(pos, dist, c)
     })
 
     local count = 0
-    local nodes = minetest.find_nodes_in_area(pos1, pos2, {"vacuum:atmos_thick"})
+    local nodes = minetest.find_nodes_in_area(pos1, pos2, {"vacuum:atmos_thick", "air"})
     for _, node in ipairs(nodes) do
         count = count + 1
     end
