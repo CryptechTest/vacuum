@@ -129,9 +129,9 @@ local function flush_area(pos)
                     -- elseif data[index] == c_atmos
                     --	data[index] = c_aeri
                 elseif data[index] == c_aer then
-                    data[index] = c_aeri
-                elseif data[index] == c_air then
-                    data[index] = c_aeri
+                    data[index] = c_air
+                elseif data[index] == c_aeri then
+                    data[index] = c_air
                 end
 
             end
