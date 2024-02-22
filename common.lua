@@ -253,7 +253,7 @@ function vacuum.has_in_range(p, c_name, rng, thres)
     local pos1 = vector.subtract(pos, range)
     local pos2 = vector.add(pos, range)
 
-    local nodes = minetest.find_nodes_in_area(pos1, pos2, {c_name})
+    local nodes = minetest.find_nodes_in_area(pos1, pos2, c_name)
     return #nodes >= thres
 end
 
@@ -272,7 +272,7 @@ function vacuum.replace_nodes_at(p, rad, c_name, c_replace)
     local pos1 = vector.subtract(pos, range)
     local pos2 = vector.add(pos, range)
 
-    local nodes = minetest.find_nodes_in_area(pos1, pos2, {c_name})
+    local nodes = minetest.find_nodes_in_area(pos1, pos2, c_name)
 
     for _, node in ipairs(nodes) do
         minetest.set_node(node, {
