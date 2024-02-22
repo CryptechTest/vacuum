@@ -136,7 +136,7 @@ vacuum.flush_airpump = function(pos)
                     end
 
                     local index = area:index(x, y, z)
-                    if data[index] == c_vacuum or data[index] == c_atmos or data[index] == c_aer then
+                    if data[index] == c_vacuum or data[index] == c_atmos or data[index] == c_aer or data[index] == c_aeri then
                         data[index] = c_air
                         count = count + 1
                     end
