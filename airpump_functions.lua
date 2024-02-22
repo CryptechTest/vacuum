@@ -98,6 +98,7 @@ local c_vacuum = minetest.get_content_id("vacuum:vacuum")
 local c_atmos = minetest.get_content_id("asteroid:atmos")
 local c_aeri = minetest.get_content_id("vacuum:atmos_thick") -- thick atmos
 local c_aer = minetest.get_content_id("vacuum:atmos_thin") -- thin atmos
+local c_air = minetest.get_content_id("air")
 
 -- flushes the room of the airpump with air
 vacuum.flush_airpump = function(pos)
@@ -136,7 +137,7 @@ vacuum.flush_airpump = function(pos)
 
                     local index = area:index(x, y, z)
                     if data[index] == c_vacuum or data[index] == c_atmos or data[index] == c_aer then
-                        data[index] = c_aeri
+                        data[index] = c_air
                         count = count + 1
                     end
 
