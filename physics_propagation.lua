@@ -20,13 +20,21 @@ function register_physics_propagation(height)
         max_y = height.end_height,
         min_y = height.start_height,
         action = vacuum.throttle(2500, function(pos, node)
-            -- update metrics
-            if metric_space_vacuum_abm ~= nil then
-                metric_space_vacuum_abm.inc()
+
+            if pos.y < height.start_height + 50 then
+                return
+            end
+            if pos.y > height.end_height - 50 then
+                return
             end
 
             if vacuum.is_pos_in_spawn(pos) then
                 return
+            end
+
+            -- update metrics
+            if metric_space_vacuum_abm ~= nil then
+                metric_space_vacuum_abm.inc()
             end
 
             if vacuum.is_pos_in_space(pos) then
@@ -53,13 +61,21 @@ function register_physics_propagation(height)
         max_y = height.end_height,
         min_y = height.start_height,
         action = vacuum.throttle(2500, function(pos, node)
-            -- update metrics 
-            if metric_space_vacuum_abm ~= nil then
-                metric_space_vacuum_abm.inc()
+
+            if pos.y < height.start_height + 50 then
+                return
+            end
+            if pos.y > height.end_height - 50 then
+                return
             end
 
             if vacuum.is_pos_in_spawn(pos) then
                 return
+            end
+
+            -- update metrics 
+            if metric_space_vacuum_abm ~= nil then
+                metric_space_vacuum_abm.inc()
             end
 
             if (vacuum.is_pos_in_space(pos)) then
@@ -88,13 +104,21 @@ function register_physics_propagation(height)
         max_y = height.end_height,
         min_y = height.start_height,
         action = vacuum.throttle(2500, function(pos, node)
-            -- update metrics
-            if metric_space_vacuum_abm ~= nil then
-                metric_space_vacuum_abm.inc()
+
+            if pos.y < height.start_height + 50 then
+                return
+            end
+            if pos.y > height.end_height - 50 then
+                return
             end
 
             if vacuum.is_pos_in_spawn(pos) then
                 return
+            end
+
+            -- update metrics
+            if metric_space_vacuum_abm ~= nil then
+                metric_space_vacuum_abm.inc()
             end
 
             if not vacuum.near_powered_airpump(pos, 4) then
@@ -123,13 +147,21 @@ function register_physics_propagation(height)
         max_y = height.end_height,
         min_y = height.start_height,
         action = vacuum.throttle(2500, function(pos, node)
-            -- update metrics
-            if metric_space_vacuum_abm ~= nil then
-                metric_space_vacuum_abm.inc()
+
+            if pos.y < height.start_height + 50 then
+                return
+            end
+            if pos.y > height.end_height - 50 then
+                return
             end
 
             if vacuum.is_pos_in_spawn(pos) then
                 return
+            end
+
+            -- update metrics
+            if metric_space_vacuum_abm ~= nil then
+                metric_space_vacuum_abm.inc()
             end
 
             if vacuum.is_pos_in_space(pos) then
@@ -153,13 +185,21 @@ function register_physics_propagation(height)
         max_y = height.end_height,
         min_y = height.start_height,
         action = vacuum.throttle(2500, function(pos, node)
-            -- update metrics
-            if metric_space_vacuum_abm ~= nil then
-                metric_space_vacuum_abm.inc()
+
+            if pos.y < height.start_height + 50 then
+                return
+            end
+            if pos.y > height.end_height - 50 then
+                return
             end
 
             if vacuum.is_pos_in_spawn(pos) then
                 return
+            end
+
+            -- update metrics
+            if metric_space_vacuum_abm ~= nil then
+                metric_space_vacuum_abm.inc()
             end
 
             if vacuum.is_pos_in_space(pos) then
@@ -217,13 +257,21 @@ function register_physics_propagation(height)
         max_y = height.end_height,
         min_y = height.start_height,
         action = vacuum.throttle(2500, function(pos, node)
-            -- update metrics
-            if metric_space_vacuum_abm ~= nil then
-                metric_space_vacuum_abm.inc()
+
+            if pos.y < height.start_height + 50 then
+                return
+            end
+            if pos.y > height.end_height - 50 then
+                return
             end
 
             if vacuum.is_pos_in_spawn(pos) then
                 return
+            end
+
+            -- update metrics
+            if metric_space_vacuum_abm ~= nil then
+                metric_space_vacuum_abm.inc()
             end
 
             if vacuum.is_pos_in_space(pos) then
@@ -272,13 +320,21 @@ function register_physics_propagation(height)
         max_y = height.end_height,
         min_y = height.start_height,
         action = vacuum.throttle(2500, function(pos, node)
-            -- update metrics
-            if metric_space_vacuum_abm ~= nil then
-                metric_space_vacuum_abm.inc()
+
+            if pos.y < height.start_height + 50 then
+                return
+            end
+            if pos.y > height.end_height - 50 then
+                return
             end
 
             if vacuum.is_pos_in_spawn(pos) then
                 return
+            end
+
+            -- update metrics
+            if metric_space_vacuum_abm ~= nil then
+                metric_space_vacuum_abm.inc()
             end
 
             if vacuum.near_powered_airpump(pos, 4) and vacuum.has_in_area(pos, "vacuum:atmos_thin", 1, 5) then
