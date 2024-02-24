@@ -115,7 +115,7 @@ local run = function(pos, node)
 end
 
 minetest.register_node("vacuum:airpump", {
-    description = "Air pump",
+    description = "LV Air pump",
     tiles = {"vacuum_airpump_top.png", "vacuum_airpump_side.png" .. tube_entry, "vacuum_airpump_side.png" .. tube_entry,
              "vacuum_airpump_side.png" .. tube_entry, "vacuum_airpump_side.png" .. tube_entry,
              "vacuum_airpump_front.png"},
