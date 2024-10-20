@@ -143,7 +143,7 @@ function register_physics_propagation(height)
         nodenames = {"air"},
         neighbors = {"vacuum:vacuum"},
         interval = 1,
-        chance = 3, -- 3 ???
+        chance = 5, -- 3 ???
         max_y = height.end_height,
         min_y = height.start_height,
         action = vacuum.throttle(2500, function(pos, node)
@@ -252,7 +252,7 @@ function register_physics_propagation(height)
         label = "thin atmos -> vacuum replacement",
         nodenames = {"vacuum:atmos_thin", "vacuum:atmos_thick", "air"},
         neighbors = {"vacuum:vacuum"},
-        interval = 10,
+        interval = 15,
         chance = 1,
         max_y = height.end_height,
         min_y = height.start_height,

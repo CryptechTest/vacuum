@@ -60,10 +60,10 @@ end
 if not vacuum.disable_physics then
     dofile(MP .. "/physics_drop.lua")
     dofile(MP .. "/physics_leakage.lua")
-    dofile(MP .. "/physics_leakage2.lua")
+    dofile(MP .. "/physics_leakage_air.lua")
     dofile(MP .. "/physics_plants.lua")
     dofile(MP .. "/physics_propagation.lua")
-    dofile(MP .. "/physics_propagation2.lua")
+    dofile(MP .. "/physics_propagation_air.lua")
     dofile(MP .. "/physics_soil.lua")
     dofile(MP .. "/physics_sublimation.lua")
 
