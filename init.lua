@@ -69,12 +69,12 @@ if not vacuum.disable_physics then
 
     for i, height in pairs(vacuum.vac_heights) do
         if height.enabled then
-            register_physics_drop(height)
-            register_physics_leakage(height)
-            register_physics_plants(height)
-            register_physics_propagation(height)
-            register_physics_soil(height)
-            register_physics_sublimation(height)
+            vacuum.register_physics_drop(height)
+            vacuum.register_physics_leakage(height)
+            vacuum.register_physics_plants(height)
+            vacuum.register_physics_propagation(height)
+            vacuum.register_physics_soil(height)
+            vacuum.register_physics_sublimation(height)
             minetest.log("action",
                 "[vacuum] " .. "Registered Vacuum ABM on nodes at " .. height.start_height .. " to " ..
                     height.end_height)
@@ -83,12 +83,12 @@ if not vacuum.disable_physics then
 
     for i, height in pairs(vacuum.air_heights) do
         if height.enabled then
-            register_physics_drop(height)
-            register_physics_leakage2(height)
-            register_physics_plants(height)
-            register_physics_propagation2(height)
-            register_physics_soil(height)
-            register_physics_sublimation(height)
+            vacuum.register_physics_drop(height)
+            vacuum.register_physics_leakage2(height)
+            vacuum.register_physics_plants(height)
+            vacuum.register_physics_propagation2(height)
+            vacuum.register_physics_soil(height)
+            vacuum.register_physics_sublimation(height)
             minetest.log("action", "[vacuum] " .. "Registered Air ABM on nodes at " .. height.start_height .. " to " ..
                 height.end_height)
         end

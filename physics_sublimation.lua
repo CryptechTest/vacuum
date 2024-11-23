@@ -1,4 +1,4 @@
-function register_physics_sublimation(height)
+function vacuum.register_physics_sublimation(height)
 
     -- sublimate nodes in vacuum
     minetest.register_abm({

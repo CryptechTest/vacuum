@@ -24,7 +24,7 @@ minetest.register_node("vacuum:dead_leaves", {
     }
 })
 
-function register_physics_plants(height)
+function vacuum.register_physics_plants(height)
 
     -- plants in vacuum
     minetest.register_abm({

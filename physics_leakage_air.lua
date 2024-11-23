@@ -21,7 +21,7 @@ if has_technic then
     table.insert(leaky_nodes, "technic:hv_cable")
 end
 
-function register_physics_leakage2(height)
+function vacuum.register_physics_leakage2(height)
 
     -- depressurize through leaky nodes
     minetest.register_abm({

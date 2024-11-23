@@ -8,15 +8,15 @@ end
 
 -- ====================================================================================
 
-function register_physics_propagation(height)
+function vacuum.register_physics_propagation(height)
 
     -- thin atmos propagation
     minetest.register_abm({
         label = "vacuum -> thin atmos replacement",
         nodenames = {"vacuum:vacuum"},
-        neighbors = {"air"},
-        interval = 5,
-        chance = 1, -- this need to be 1..
+        neighbors = {"air", "vacuum:atmos_thin"},
+        interval = 10, -- 5
+        chance = 2, -- this need to be 1..
         max_y = height.end_height,
         min_y = height.start_height,
         action = vacuum.throttle(2500, function(pos, node)
@@ -38,11 +38,12 @@ function register_physics_propagation(height)
             end
 
             if vacuum.is_pos_in_space(pos) then
-                if vacuum.near_powered_airpump(pos, 3) then
+                --[[if vacuum.near_powered_airpump(pos, 3) then
                     minetest.set_node(pos, {
                         name = "vacuum:atmos_thin"
                     })
-                elseif vacuum.has_in_area(pos, "air", 1, 4) then
+                end]]
+                if vacuum.has_in_area(pos, "air", 1, 4) then
                     minetest.set_node(pos, {
                         name = "vacuum:atmos_thin"
                     })
@@ -52,7 +53,7 @@ function register_physics_propagation(height)
     })
 
     -- thin atmos propagation
-    minetest.register_abm({
+    --[[minetest.register_abm({
         label = "vacuum -> atmos_thin replacement",
         nodenames = {"vacuum:vacuum"},
         neighbors = {"vacuum:atmos_thin"},
@@ -90,7 +91,7 @@ function register_physics_propagation(height)
                 end
             end
         end)
-    })
+    })]]
 
     -- ====================================================================================
 
@@ -99,11 +100,11 @@ function register_physics_propagation(height)
         label = "thick atmos -> thin replacement",
         nodenames = {"air"},
         neighbors = {"vacuum:atmos_thin"},
-        interval = 5,
+        interval = 6,
         chance = 2,
         max_y = height.end_height,
         min_y = height.start_height,
-        action = vacuum.throttle(2500, function(pos, node)
+        action = vacuum.throttle(2000, function(pos, node)
 
             if pos.y < height.start_height + 50 then
                 return
@@ -142,8 +143,8 @@ function register_physics_propagation(height)
         label = "vacuum -> thin atmos replacement",
         nodenames = {"air"},
         neighbors = {"vacuum:vacuum"},
-        interval = 1,
-        chance = 5, -- 3 ???
+        interval = 5,
+        chance = 3, -- 3 ???
         max_y = height.end_height,
         min_y = height.start_height,
         action = vacuum.throttle(2500, function(pos, node)
@@ -178,13 +179,13 @@ function register_physics_propagation(height)
     minetest.register_abm({
         -- replace air and thin with thick..
         label = "aer -> thick atmos replacement",
-        nodenames = {"vacuum:atmos_thin", "vacuum:atmos_thick"}, -- , "technic:dummy_light_source"
+        nodenames = {"vacuum:atmos_thin", "vacuum:atmos_thick"},
         neighbors = {"air"},
-        interval = 2,
+        interval = 20,
         chance = 1,
         max_y = height.end_height,
         min_y = height.start_height,
-        action = vacuum.throttle(2500, function(pos, node)
+        action = vacuum.throttle(3000, function(pos, node)
 
             if pos.y < height.start_height + 50 then
                 return
@@ -252,11 +253,11 @@ function register_physics_propagation(height)
         label = "thin atmos -> vacuum replacement",
         nodenames = {"vacuum:atmos_thin", "vacuum:atmos_thick", "air"},
         neighbors = {"vacuum:vacuum"},
-        interval = 15,
+        interval = 30,
         chance = 1,
         max_y = height.end_height,
         min_y = height.start_height,
-        action = vacuum.throttle(2500, function(pos, node)
+        action = vacuum.throttle(6000, function(pos, node)
 
             if pos.y < height.start_height + 50 then
                 return
@@ -311,7 +312,7 @@ function register_physics_propagation(height)
     -- ====================================================================================
     -- thick atmos propagation base
     -- seed propagation
-    minetest.register_abm({
+    --[[minetest.register_abm({
         label = "thin atmos + vacuum -> atmos replacement",
         nodenames = {"vacuum:atmos_thin", "vacuum:vacuum"},
         neighbors = {"vacuum:airpump", "vacuum:airpump_wait", "vacuum:airpump_active"},
@@ -347,6 +348,6 @@ function register_physics_propagation(height)
                 })
             end
         end)
-    })
+    })]]
 
 end

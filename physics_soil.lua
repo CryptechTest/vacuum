@@ -1,4 +1,4 @@
-function register_physics_soil(height)
+function vacuum.register_physics_soil(height)
 
     -- various dirts in vacuum
     minetest.register_abm({

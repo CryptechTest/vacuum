@@ -13,7 +13,7 @@ local function get_node_drops(node)
     return minetest.get_node_drops(node)
 end
 
-function register_physics_drop(height)
+function vacuum.register_physics_drop(height)
 
     -- weird nodes in vacuum
     minetest.register_abm({

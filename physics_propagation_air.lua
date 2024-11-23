@@ -8,7 +8,7 @@ end
 
 -- ====================================================================================
 
-function register_physics_propagation2(height)
+function vacuum.register_physics_propagation2(height)
 
     -- thin atmos propagation
     minetest.register_abm({
