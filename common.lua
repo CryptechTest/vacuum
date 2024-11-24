@@ -332,18 +332,33 @@ function vacuum.has_in_area_data(pos1, pos2, area, data, c_name, thres)
 end
 
 function vacuum.spawn_particle(pos, dir_x, dir_y, dir_z, acl_x, acl_y, acl_z, lvl, time)
-    local texture = "vacuum_air_particle_1.png"
+    local texture_name = "vacuum_air_particle_1.png"
     if (math.random() > 0.5) then
-        texture = "vacuum_air_particle_1.png^[transformR90]"
+        texture_name = "vacuum_air_particle_1.png^[transformR90]"
     end
     if (math.random() > 0.5) then
-        texture = texture .. "^[colorize:#4aebf7:10"
+        texture_name = texture_name .. "^[colorize:#4aebf7:10"
     end
+
+    local animation = nil
+    local texture = {
+        name = texture_name,
+        blend = "alpha",
+        scale = 1,
+        alpha = 1.0,
+        alpha_tween = {1, 0},
+        scale_tween = {{
+            x = 0.75,
+            y = 0.75
+        }, {
+            x = 2.2,
+            y = 2.0
+        }}
+    }
+
     local prt = {
-        texture = {
-            name = texture,
-            fade = "out"
-        },
+        texture = texture,
+        animation = animation,
         vel = 1,
         time = time or 6,
         size = 2 + (lvl or 1),
@@ -371,11 +386,12 @@ function vacuum.spawn_particle(pos, dir_x, dir_y, dir_z, acl_x, acl_y, acl_z, lv
                 y = acl_y + math.random(-0.008, 0.0001),
                 z = acl_z
             },
-            expirationtime = ((math.random() / 5) + 0.2) * prt.time,
+            expirationtime = ((math.random() / 5) + 0.5) * prt.time,
             size = ((math.random(0.65, 0.90)) * 2 + 0.1) * prt.size,
             collisiondetection = prt.cols,
             vertical = false,
             texture = prt.texture,
+            animation = prt.animation,
             glow = prt.glow
         })
     end
