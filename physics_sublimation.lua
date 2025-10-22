@@ -5,7 +5,7 @@ function vacuum.register_physics_sublimation(height)
         label = "space vacuum sublimate",
         nodenames = {"group:snowy"},
         neighbors = {"vacuum:vacuum"},
-        interval = 3,
+        interval = 5,
         chance = 2, -- 1
         max_y = height.end_height,
         min_y = height.start_height,
@@ -18,7 +18,7 @@ function vacuum.register_physics_sublimation(height)
                 return
             end
 
-            if vacuum.has_in_area(pos, "vacuum:vacuum", 1, 17) and not vacuum.near_powered_airpump(pos) then
+            if vacuum.has_in_area(pos, "vacuum:vacuum", 1, 17) then -- and not vacuum.near_powered_airpump(pos) then
                 -- minetest.log("sublimate")
                 minetest.set_node(pos, {
                     name = "vacuum:atmos_thin"
@@ -45,7 +45,7 @@ function vacuum.register_physics_sublimation(height)
                 return
             end
 
-            if vacuum.has_in_area(pos, "vacuum:vacuum", 1, 6) and not vacuum.near_powered_airpump(pos) then
+            if vacuum.has_in_area(pos, "vacuum:vacuum", 1, 6) then -- and not vacuum.near_powered_airpump(pos) then
                 -- minetest.log("sublimate")
                 if node.name == "default:water_source" then
                     minetest.set_node(pos, {
@@ -60,7 +60,7 @@ function vacuum.register_physics_sublimation(height)
         end)
     })
 
-    minetest.register_abm({
+    --[[minetest.register_abm({
         label = "space vacuum sublimate",
         nodenames = {"asteroid:atmos", "vacuum:atmos_thin"},
         neighbors = {"group:water"},
@@ -69,7 +69,7 @@ function vacuum.register_physics_sublimation(height)
         max_y = height.end_height,
         min_y = height.start_height,
         action = vacuum.throttle(1000, function(pos)
-            if not vacuum.is_pos_in_space(pos) or vacuum.near_powered_airpump(pos) then
+            if not vacuum.is_pos_in_space(pos) then -- or vacuum.near_powered_airpump(pos) then
                 return
             end
 
@@ -89,6 +89,6 @@ function vacuum.register_physics_sublimation(height)
                 })
             end
         end)
-    })
+    })]]
 
 end
